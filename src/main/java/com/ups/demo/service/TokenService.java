@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Service
 public class TokenService {
 
-    @Autowired
-    private User user;
     @Autowired
     private UserMapper userMapper;
     // 一般是把token和用户对应关系放在数据库或高速缓存(例如readis/memcache等），放在一个单例类的成员变量里仅适合很小规模的情形
@@ -37,8 +37,8 @@ public class TokenService {
      */
     public String login(String userName, String password) {
         UserDetails ud = null;
-        user = userMapper.selectByPrimaryKey(userName);
-        // 此例中支持三个用户： author/reader/admin 三个用户的密码都是password; author具有author角色；reader具有reader角色；admin则2个角色都有
+        User user = userMapper.selectByPrimaryKey(userName);
+        // 支持两种用户：reader/admin
         if(user != null && user.getStrPassword().equals(password)) {
             ud = createUser(userName, password, new String[] {user.getStrRank()});
         }

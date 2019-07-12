@@ -71,9 +71,11 @@
     <build>
         <!-- 扫描相应的mapper文件(还要在application.yml文件中配置相应的路径mybatis: mapper-Locations) -->
         <resources>
+            <!-- 配置下面两个资源保证所有配置文件和其他文件都能找到 -->
             <resource>
-                <directory>src/main/java</directory><!--所在的目录-->
-                <includes><!--包括目录下的.properties,.xml文件都会扫描到-->
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.yml</include>
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
                 </includes>
@@ -82,9 +84,9 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
+                    <include>**/*.yml</include>
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
-                    <include>**/*.tld</include>
                 </includes>
                 <filtering>false</filtering>
             </resource>
