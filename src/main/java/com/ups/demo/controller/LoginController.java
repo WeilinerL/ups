@@ -20,7 +20,7 @@ public class LoginController {
     @Autowired
     TokenService tokenService;
 
-    @PostMapping
+    @PostMapping(value = "login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> userInfo){
         String userName = userInfo.get("username");
         String password = userInfo.get("password");
@@ -31,6 +31,7 @@ public class LoginController {
             result.put("message", "invalid username or password");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
         }else {
+            result.put("用户名",tokenService.getUserFromToken(token).getUsername());
             result.put("token", token);
             return ResponseEntity.status(HttpStatus.OK).body(result);
         }
@@ -38,16 +39,23 @@ public class LoginController {
 
     @DeleteMapping
     public Map<String, Object> logout(HttpServletRequest request){
+        HashMap<String, Object> result = new HashMap<>();
         String token = null;
         String requestHeader = request.getHeader("Authorization");
         if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
             token = requestHeader.substring(7);
-            if(log.isTraceEnabled()) {
+            if(log.isTraceEnabled() && tokenService.getUserFromToken(token) != null) {
                 log.trace("will delete token : " + token);
+                result.put("注销用户",tokenService.getUserFromToken(token).getUsername());
+                tokenService.logout(token);
+                return result;
+            } else {
+                result.put("注销失败","无此用户登录信息!");
+                return result;
             }
-            tokenService.logout(token);
+        } else{
+            result.put("注销失败","无此用户登录信息!");
+            return result;
         }
-        HashMap<String, Object> result = new HashMap<>();
-        return result;
     }
 }
