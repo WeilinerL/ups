@@ -11,9 +11,9 @@
     <groupId>com.ups</groupId>
     <artifactId>UPS</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-<!--    <name>demo</name>-->
+    <!--    <name>demo</name>-->
     <name>UPS Maven Webapp</name>
-    <description>Demo project for Spring Boot</description>
+    <description>UPS project</description>
 
     <properties>
         <!--   一下两个编码格式为自己所加    -->
