@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ups.demo.dao.DeviceBrandMapper" >
+  <resultMap id="BaseResultMap" type="com.ups.demo.pojo.DeviceBrand" >
+    <id column="str_brand_id" property="strBrandId" jdbcType="VARCHAR" />
+    <result column="str_brand_name" property="strBrandName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    str_brand_id, str_brand_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_device_brand
+    where str_brand_id = #{strBrandId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_device_brand
+    where str_brand_id = #{strBrandId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ups.demo.pojo.DeviceBrand" >
+    insert into t_device_brand (str_brand_id, str_brand_name)
+    values (#{strBrandId,jdbcType=VARCHAR}, #{strBrandName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ups.demo.pojo.DeviceBrand" >
+    insert into t_device_brand
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="strBrandId != null" >
+        str_brand_id,
+      </if>
+      <if test="strBrandName != null" >
+        str_brand_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="strBrandId != null" >
+        #{strBrandId,jdbcType=VARCHAR},
+      </if>
+      <if test="strBrandName != null" >
+        #{strBrandName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ups.demo.pojo.DeviceBrand" >
+    update t_device_brand
+    <set >
+      <if test="strBrandName != null" >
+        str_brand_name = #{strBrandName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where str_brand_id = #{strBrandId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ups.demo.pojo.DeviceBrand" >
+    update t_device_brand
+    set str_brand_name = #{strBrandName,jdbcType=VARCHAR}
+    where str_brand_id = #{strBrandId,jdbcType=VARCHAR}
+  </update>
+</mapper>

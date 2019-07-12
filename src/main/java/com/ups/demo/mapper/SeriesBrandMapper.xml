@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ups.demo.dao.SeriesBrandMapper" >
+  <resultMap id="BaseResultMap" type="com.ups.demo.pojo.SeriesBrandKey" >
+    <id column="str_series_id" property="strSeriesId" jdbcType="VARCHAR" />
+    <id column="str_brand_id" property="strBrandId" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.ups.demo.pojo.SeriesBrandKey" >
+    delete from t_series_brand_relation
+    where str_series_id = #{strSeriesId,jdbcType=VARCHAR}
+      and str_brand_id = #{strBrandId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ups.demo.pojo.SeriesBrandKey" >
+    insert into t_series_brand_relation (str_series_id, str_brand_id)
+    values (#{strSeriesId,jdbcType=VARCHAR}, #{strBrandId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ups.demo.pojo.SeriesBrandKey" >
+    insert into t_series_brand_relation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="strSeriesId != null" >
+        str_series_id,
+      </if>
+      <if test="strBrandId != null" >
+        str_brand_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="strSeriesId != null" >
+        #{strSeriesId,jdbcType=VARCHAR},
+      </if>
+      <if test="strBrandId != null" >
+        #{strBrandId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

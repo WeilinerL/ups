@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ups.demo.dao.PointTableMapper" >
+  <resultMap id="BaseResultMap" type="com.ups.demo.pojo.PointTable" >
+    <id column="str_table_id" property="strTableId" jdbcType="VARCHAR" />
+    <result column="str_number_type" property="strNumberType" jdbcType="VARCHAR" />
+    <result column="str_data_type" property="strDataType" jdbcType="VARCHAR" />
+    <result column="str_data_name" property="strDataName" jdbcType="VARCHAR" />
+    <result column="str_read_values" property="strReadValues" jdbcType="VARCHAR" />
+    <result column="str_analytical_formula" property="strAnalyticalFormula" jdbcType="VARCHAR" />
+    <result column="str_parsed_values" property="strParsedValues" jdbcType="VARCHAR" />
+    <result column="str_data_address" property="strDataAddress" jdbcType="VARCHAR" />
+    <result column="str_bits" property="strBits" jdbcType="VARCHAR" />
+    <result column="str_unit" property="strUnit" jdbcType="VARCHAR" />
+    <result column="str_core_id" property="strCoreId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    str_table_id, str_number_type, str_data_type, str_data_name, str_read_values, str_analytical_formula, 
+    str_parsed_values, str_data_address, str_bits, str_unit, str_core_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_point_table
+    where str_table_id = #{strTableId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_point_table
+    where str_table_id = #{strTableId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ups.demo.pojo.PointTable" >
+    insert into t_point_table (str_table_id, str_number_type, str_data_type, 
+      str_data_name, str_read_values, str_analytical_formula, 
+      str_parsed_values, str_data_address, str_bits, 
+      str_unit, str_core_id)
+    values (#{strTableId,jdbcType=VARCHAR}, #{strNumberType,jdbcType=VARCHAR}, #{strDataType,jdbcType=VARCHAR}, 
+      #{strDataName,jdbcType=VARCHAR}, #{strReadValues,jdbcType=VARCHAR}, #{strAnalyticalFormula,jdbcType=VARCHAR}, 
+      #{strParsedValues,jdbcType=VARCHAR}, #{strDataAddress,jdbcType=VARCHAR}, #{strBits,jdbcType=VARCHAR}, 
+      #{strUnit,jdbcType=VARCHAR}, #{strCoreId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ups.demo.pojo.PointTable" >
+    insert into t_point_table
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="strTableId != null" >
+        str_table_id,
+      </if>
+      <if test="strNumberType != null" >
+        str_number_type,
+      </if>
+      <if test="strDataType != null" >
+        str_data_type,
+      </if>
+      <if test="strDataName != null" >
+        str_data_name,
+      </if>
+      <if test="strReadValues != null" >
+        str_read_values,
+      </if>
+      <if test="strAnalyticalFormula != null" >
+        str_analytical_formula,
+      </if>
+      <if test="strParsedValues != null" >
+        str_parsed_values,
+      </if>
+      <if test="strDataAddress != null" >
+        str_data_address,
+      </if>
+      <if test="strBits != null" >
+        str_bits,
+      </if>
+      <if test="strUnit != null" >
+        str_unit,
+      </if>
+      <if test="strCoreId != null" >
+        str_core_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="strTableId != null" >
+        #{strTableId,jdbcType=VARCHAR},
+      </if>
+      <if test="strNumberType != null" >
+        #{strNumberType,jdbcType=VARCHAR},
+      </if>
+      <if test="strDataType != null" >
+        #{strDataType,jdbcType=VARCHAR},
+      </if>
+      <if test="strDataName != null" >
+        #{strDataName,jdbcType=VARCHAR},
+      </if>
+      <if test="strReadValues != null" >
+        #{strReadValues,jdbcType=VARCHAR},
+      </if>
+      <if test="strAnalyticalFormula != null" >
+        #{strAnalyticalFormula,jdbcType=VARCHAR},
+      </if>
+      <if test="strParsedValues != null" >
+        #{strParsedValues,jdbcType=VARCHAR},
+      </if>
+      <if test="strDataAddress != null" >
+        #{strDataAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="strBits != null" >
+        #{strBits,jdbcType=VARCHAR},
+      </if>
+      <if test="strUnit != null" >
+        #{strUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="strCoreId != null" >
+        #{strCoreId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ups.demo.pojo.PointTable" >
+    update t_point_table
+    <set >
+      <if test="strNumberType != null" >
+        str_number_type = #{strNumberType,jdbcType=VARCHAR},
+      </if>
+      <if test="strDataType != null" >
+        str_data_type = #{strDataType,jdbcType=VARCHAR},
+      </if>
+      <if test="strDataName != null" >
+        str_data_name = #{strDataName,jdbcType=VARCHAR},
+      </if>
+      <if test="strReadValues != null" >
+        str_read_values = #{strReadValues,jdbcType=VARCHAR},
+      </if>
+      <if test="strAnalyticalFormula != null" >
+        str_analytical_formula = #{strAnalyticalFormula,jdbcType=VARCHAR},
+      </if>
+      <if test="strParsedValues != null" >
+        str_parsed_values = #{strParsedValues,jdbcType=VARCHAR},
+      </if>
+      <if test="strDataAddress != null" >
+        str_data_address = #{strDataAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="strBits != null" >
+        str_bits = #{strBits,jdbcType=VARCHAR},
+      </if>
+      <if test="strUnit != null" >
+        str_unit = #{strUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="strCoreId != null" >
+        str_core_id = #{strCoreId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where str_table_id = #{strTableId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ups.demo.pojo.PointTable" >
+    update t_point_table
+    set str_number_type = #{strNumberType,jdbcType=VARCHAR},
+      str_data_type = #{strDataType,jdbcType=VARCHAR},
+      str_data_name = #{strDataName,jdbcType=VARCHAR},
+      str_read_values = #{strReadValues,jdbcType=VARCHAR},
+      str_analytical_formula = #{strAnalyticalFormula,jdbcType=VARCHAR},
+      str_parsed_values = #{strParsedValues,jdbcType=VARCHAR},
+      str_data_address = #{strDataAddress,jdbcType=VARCHAR},
+      str_bits = #{strBits,jdbcType=VARCHAR},
+      str_unit = #{strUnit,jdbcType=VARCHAR},
+      str_core_id = #{strCoreId,jdbcType=VARCHAR}
+    where str_table_id = #{strTableId,jdbcType=VARCHAR}
+  </update>
+</mapper>

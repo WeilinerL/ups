@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ups.demo.dao.DataMapper" >
+  <resultMap id="BaseResultMap" type="com.ups.demo.pojo.Data" >
+    <id column="str_data_id" property="strDataId" jdbcType="VARCHAR" />
+    <result column="str_data_type" property="strDataType" jdbcType="VARCHAR" />
+    <result column="double_read_values" property="doubleReadValues" jdbcType="DOUBLE" />
+    <result column="data_read_time" property="dataReadTime" jdbcType="DATE" />
+    <result column="str_id" property="strId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    str_data_id, str_data_type, double_read_values, data_read_time, str_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_data
+    where str_data_id = #{strDataId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_data
+    where str_data_id = #{strDataId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ups.demo.pojo.Data" >
+    insert into t_data (str_data_id, str_data_type, double_read_values, 
+      data_read_time, str_id)
+    values (#{strDataId,jdbcType=VARCHAR}, #{strDataType,jdbcType=VARCHAR}, #{doubleReadValues,jdbcType=DOUBLE}, 
+      #{dataReadTime,jdbcType=DATE}, #{strId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ups.demo.pojo.Data" >
+    insert into t_data
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="strDataId != null" >
+        str_data_id,
+      </if>
+      <if test="strDataType != null" >
+        str_data_type,
+      </if>
+      <if test="doubleReadValues != null" >
+        double_read_values,
+      </if>
+      <if test="dataReadTime != null" >
+        data_read_time,
+      </if>
+      <if test="strId != null" >
+        str_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="strDataId != null" >
+        #{strDataId,jdbcType=VARCHAR},
+      </if>
+      <if test="strDataType != null" >
+        #{strDataType,jdbcType=VARCHAR},
+      </if>
+      <if test="doubleReadValues != null" >
+        #{doubleReadValues,jdbcType=DOUBLE},
+      </if>
+      <if test="dataReadTime != null" >
+        #{dataReadTime,jdbcType=DATE},
+      </if>
+      <if test="strId != null" >
+        #{strId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ups.demo.pojo.Data" >
+    update t_data
+    <set >
+      <if test="strDataType != null" >
+        str_data_type = #{strDataType,jdbcType=VARCHAR},
+      </if>
+      <if test="doubleReadValues != null" >
+        double_read_values = #{doubleReadValues,jdbcType=DOUBLE},
+      </if>
+      <if test="dataReadTime != null" >
+        data_read_time = #{dataReadTime,jdbcType=DATE},
+      </if>
+      <if test="strId != null" >
+        str_id = #{strId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where str_data_id = #{strDataId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ups.demo.pojo.Data" >
+    update t_data
+    set str_data_type = #{strDataType,jdbcType=VARCHAR},
+      double_read_values = #{doubleReadValues,jdbcType=DOUBLE},
+      data_read_time = #{dataReadTime,jdbcType=DATE},
+      str_id = #{strId,jdbcType=VARCHAR}
+    where str_data_id = #{strDataId,jdbcType=VARCHAR}
+  </update>
+</mapper>
