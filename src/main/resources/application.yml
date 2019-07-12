@@ -1,0 +1,21 @@
+#记录日志
+logging:
+  file: target/app.log
+  level:
+    ROOT: WARN
+    com.ups: TRACE
+spring:
+  jackson:
+    date-format: yyyy-MM-dd #
+    time-zone: GMT+8
+    serialization:
+      write-dates-as-timestamps: false #使用数值timestamp表示日期
+  datasource: #连接数据库
+    dbcp2.validation-query: select 1
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ups_project
+    username: root
+    password: 123456
+mybatis:
+  mapper-Locations: classpath:com/ups/demo/mapper/*.xml #Mapper.xml
+  type-Aliases-Package: com.ups.demo.pojo
