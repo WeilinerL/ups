@@ -17,7 +17,7 @@ public class TokenService {
     @Autowired
     private UserMapper userMapper;
     // 一般是把token和用户对应关系放在数据库或高速缓存(例如readis/memcache等），放在一个单例类的成员变量里仅适合很小规模的情形
-    private Map<String, UserDetails> tokenMap = new HashMap<>();
+    private static Map<String, UserDetails> tokenMap = new HashMap<>();
 
     /**
      * 这个方法在每次访问都会被调用；为了提示效率应该使用@Cacheable注解缓存；
@@ -28,6 +28,20 @@ public class TokenService {
         }
         return tokenMap.get(token);
     }
+
+    /*
+     登录人数过多时效率太低
+     */
+//    public boolean loginCheck(String username) {
+//        Iterator<Map.Entry<String,UserDetails>> iterator = tokenMap.entrySet().iterator();
+//        while (iterator.hasNext()) {
+//            Map.Entry<String,UserDetails> entry = iterator.next();
+//            if(entry.getValue().getUsername().equals(username)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     /**
      * 登录，成功返回token

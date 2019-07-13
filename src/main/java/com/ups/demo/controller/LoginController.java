@@ -31,6 +31,9 @@ public class LoginController {
             result.put("message", "invalid username or password");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
         }else {
+            if(log.isTraceEnabled()) {
+                log.trace("用户名为"+ tokenService.getUserFromToken(token).getUsername() + "的用户成功登录");
+            }
             result.put("用户名",tokenService.getUserFromToken(token).getUsername());
             result.put("token", token);
             return ResponseEntity.status(HttpStatus.OK).body(result);

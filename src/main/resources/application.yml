@@ -19,3 +19,5 @@ spring:
 mybatis:
   mapper-Locations: classpath:com/ups/demo/mapper/*.xml #Mapper.xml
   type-Aliases-Package: com.ups.demo.pojo
+  configuration:
+    map-underscore-to-camel-case: true #数据库下划线转驼峰命名

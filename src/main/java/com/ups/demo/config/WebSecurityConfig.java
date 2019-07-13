@@ -15,6 +15,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final static Log log = LogFactory.getLog(WebSecurityConfig.class);
 
+    // 如果有一个Filter，来实现从cookie创建当前用户（或其他），需要确保这个filter在BasicAuthenticationFilter之前执行，可以用下面这句
+    // httpSecurity.addFilterBefore( new JwtAuthenticationTokenFilter(), BasicAuthenticationFilter.class);
+    // 这样就不再需要在filter上增加@Component等类似注解了。如果增加了，可能会导致filter重复执行2次
+
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         if (log.isTraceEnabled()) {
