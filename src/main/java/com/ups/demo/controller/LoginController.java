@@ -15,18 +15,20 @@ import java.util.Map;
 @RestController
 @RequestMapping(value = "/")
 public class LoginController {
+
     private final static Log log = LogFactory.getLog(LoginController.class);
 
     @Autowired
     TokenService tokenService;
 
     @PostMapping(value = "login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> userInfo){
+    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> userInfo,
+                                                     @RequestHeader(value="User-Agent") String userAgent){
         String userName = userInfo.get("username");
         String password = userInfo.get("password");
 
         HashMap<String, Object> result = new HashMap<>();
-        String token = tokenService.login(userName, password);
+        String token = tokenService.loginCheck(userName, password,userAgent);
         if(token == null) {
             result.put("message", "invalid username or password");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
@@ -36,6 +38,7 @@ public class LoginController {
             }
             result.put("用户名",tokenService.getUserFromToken(token).getUsername());
             result.put("token", token);
+            result.put("客户端",userAgent);
             return ResponseEntity.status(HttpStatus.OK).body(result);
         }
     }

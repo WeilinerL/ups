@@ -1,22 +1,34 @@
 package com.ups.demo.service;
 
+import com.auth0.jwt.interfaces.Claim;
+import com.ups.demo.controller.LoginController;
+import com.ups.demo.dao.UserLogInfoMapper;
 import com.ups.demo.dao.UserMapper;
 import com.ups.demo.pojo.User;
+import com.ups.demo.pojo.UserLogInfo;
 import com.ups.demo.utils.JwtToken;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
 public class TokenService {
 
+    private final static Log log = LogFactory.getLog(LoginController.class);
+
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private UserLogInfoMapper userLogInfoMapper;
     // 一般是把token和用户对应关系放在数据库或高速缓存(例如readis/memcache等），放在一个单例类的成员变量里仅适合很小规模的情形
+    //这里我也存客户的一部分信息 主要信息存在数据库 再根据数据库存的信息来匹配临时信息
     private static Map<String, UserDetails> tokenMap = new HashMap<>();
 
     /**
@@ -44,33 +56,106 @@ public class TokenService {
 //    }
 
     /**
-     * 登录，成功返回token
-     * @param userName
-     * @param password
+     * 从数据库获取相应的登录信息
+     * @param userName 用户名
      * @return
      */
-    public String login(String userName, String password) {
-        UserDetails ud = null;
-        User user = userMapper.selectByPrimaryKey(userName);
-        // 支持两种用户：reader/admin
-        if(user != null && user.getStrPassword().equals(password)) {
-            ud = createUser(userName, password, new String[] {user.getStrRank()});
+
+    public UserLogInfo getLogInfo(String userName) {
+        UserLogInfo userLogInfo = userLogInfoMapper.selectByPrimaryKey(userName);
+        return userLogInfo;
+    }
+
+    /**
+     * 检查用户登录
+     * @param userName
+     * @param password
+     * @param userAgent
+     * @return
+     */
+
+    public String loginCheck(String userName, String password, String userAgent) {
+        UserLogInfo userLogInfo = getLogInfo(userName);
+        boolean flag = false;
+        if(userLogInfo != null) {//避免空指针
+            Map<String, Claim> claimMap = JwtToken.verifyToken(userLogInfo.getStrToken());
+            if(claimMap != null) {
+                flag = true;
+            }
         }
-        if(ud != null) {
-            String token = JwtToken.createToken(userName);
-            tokenMap.put(token, ud);
-            return token;
-        }else {
-            return null;
+        //有用户登录信息且用户此次登录设备为同一种设备且token令牌未过期
+        //则把令牌返回给该用户(防止重复登录)
+        if(userLogInfo != null && userLogInfo.getStrUserAgent().equals(userAgent) && flag) {
+            if(log.isTraceEnabled()) {
+                log.trace("同一设备有效登录");
+            }
+            //如果spring tokenMap临时信息丢失
+            if(!tokenMap.containsKey(userLogInfo.getStrToken())) {
+                User user = userMapper.selectByPrimaryKey(userName);
+                tokenMap.put(userLogInfo.getStrToken(),createUser(userName,password,new String[]{user.getStrRank()}));
+            }
+            return userLogInfo.getStrToken();
+        }
+        //此时用户换了个设备登录且在token令牌有效期内
+        else if(userLogInfo != null && !userLogInfo.getStrUserAgent().equals(userAgent) && flag) {
+            if(log.isTraceEnabled()) {
+                log.trace("换另外的设备有效登录");
+            }
+            //原设备强制下线 更新token
+            logout(userLogInfo.getStrToken());
+            userLogInfoMapper.deleteByPrimaryKey(userName);
+            return login(userName,password,userAgent);
+        }
+        //用户第一次登录或者token令牌已过期
+        else {
+            if(log.isTraceEnabled()) {
+                log.trace("第一次登录或原登录token令牌已失效");
+            }
+            return login(userName,password,userAgent);
         }
     }
 
     /**
+     * 登录，成功返回token
+     * @param userName 用户名
+     * @param password 密码
+     * @param userAgent 客户端
+     * @return
+     */
+    public String login(String userName, String password,String userAgent) {
+            UserDetails ud = null;
+            User user = userMapper.selectByPrimaryKey(userName);
+            // 支持两种用户：reader/admin
+            if(user != null && user.getStrPassword().equals(password)) {
+                ud = createUser(userName, password, new String[] {user.getStrRank()});
+            }
+            if(ud != null) {
+                Date date = new Date();
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String time = df.format(date);
+                String token = JwtToken.createToken(userName);
+                //在数据库创建对应的登录信息
+                UserLogInfo userLogInfo2 = new UserLogInfo();
+                userLogInfo2.setStrToken(token);
+                userLogInfo2.setStrUsername(userName);
+                userLogInfo2.setStrUserAgent(userAgent);
+                userLogInfo2.setStrLoginTime(time);
+                userLogInfoMapper.insert(userLogInfo2);
+                tokenMap.put(token, ud);
+                return token;
+            }else {
+                return null;
+            }
+
+    }
+
+    /**
      * 退出，移除token
-     * @param token
+     * @param token 令牌
      */
     public boolean logout(String token) {
         if(getUserFromToken(token) != null) {
+            userLogInfoMapper.deleteByToken(token);
             tokenMap.remove(token);
             return true;
         } else{

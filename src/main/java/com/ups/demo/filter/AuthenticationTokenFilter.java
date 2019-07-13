@@ -1,6 +1,7 @@
 package com.ups.demo.filter;
 
 import com.ups.demo.service.TokenService;
+import com.ups.demo.utils.GetIPAddress;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
         }
         if (log.isTraceEnabled()) {
             log.trace("token is " + authToken);
+            log.trace("ip address is " + GetIPAddress.getRealIp(request));
         }
         
         if (authToken != null) {

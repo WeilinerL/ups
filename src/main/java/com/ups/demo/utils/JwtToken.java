@@ -21,9 +21,9 @@ public class JwtToken {
     /** token秘钥，请勿泄露，请勿随便修改 backups:JKKLJOoasdlfj */
     public static final String SECRET = "JKKLJOoasdlfj<>?<asdahbdwq354467)+_+{}ads567322asdERT123RDY~UYGUY678";
     /** token 过期时间: 10天 */
-    public static final int calendarField = Calendar.MINUTE;
-    // token 有效期30分钟
-    public static final int calendarInterval = 30;
+    public static final int calendarField = Calendar.DATE;
+    // token 有效期一天
+    public static final int calendarInterval = 1;
 
     /**
      * JWT生成Token.<br/>
@@ -64,7 +64,7 @@ public class JwtToken {
      * @return
      * @throws Exception
      */
-    public static Map<String, Claim> verifyToken(String token) throws Exception{
+    public static Map<String, Claim> verifyToken(String token) {
         DecodedJWT jwt = null;
         try {
             JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET)).build();
@@ -72,7 +72,9 @@ public class JwtToken {
         } catch (Exception e) {
             // e.printStackTrace();
             // token 校验失败, 抛出Token验证非法异常
-            throw new Exception("token效验失败!");
+            System.out.println("token效验失败!");
+            return null;
+//            throw new Exception("token效验失败!");
         }
         return jwt.getClaims();
     }
