@@ -1,24 +1,35 @@
 package com.ups.demo.pojo;
 
-import java.util.Date;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Data {
-    private String strDataId;
+    private String strReadTime;
 
     private String strDataType;
 
+    private String strDataName;
+
     private Double doubleReadValues;
 
-    private Date dataReadTime;
+    private Double doubleParsedValues;
+
+    private String strDataAddress;
+
+    private String strBits;
+
+    private String strUnit;
+
+    private String strNumberType;
 
     private String strId;
 
-    public String getStrDataId() {
-        return strDataId;
+    public String getStrReadTime() {
+        return strReadTime;
     }
 
-    public void setStrDataId(String strDataId) {
-        this.strDataId = strDataId == null ? null : strDataId.trim();
+    public void setStrReadTime(String strReadTime) {
+        this.strReadTime = strReadTime == null ? null : strReadTime.trim();
     }
 
     public String getStrDataType() {
@@ -29,6 +40,14 @@ public class Data {
         this.strDataType = strDataType == null ? null : strDataType.trim();
     }
 
+    public String getStrDataName() {
+        return strDataName;
+    }
+
+    public void setStrDataName(String strDataName) {
+        this.strDataName = strDataName == null ? null : strDataName.trim();
+    }
+
     public Double getDoubleReadValues() {
         return doubleReadValues;
     }
@@ -37,12 +56,44 @@ public class Data {
         this.doubleReadValues = doubleReadValues;
     }
 
-    public Date getDataReadTime() {
-        return dataReadTime;
+    public Double getDoubleParsedValues() {
+        return doubleParsedValues;
     }
 
-    public void setDataReadTime(Date dataReadTime) {
-        this.dataReadTime = dataReadTime;
+    public void setDoubleParsedValues(Double doubleParsedValues) {
+        this.doubleParsedValues = doubleParsedValues;
+    }
+
+    public String getStrDataAddress() {
+        return strDataAddress;
+    }
+
+    public void setStrDataAddress(String strDataAddress) {
+        this.strDataAddress = strDataAddress == null ? null : strDataAddress.trim();
+    }
+
+    public String getStrBits() {
+        return strBits;
+    }
+
+    public void setStrBits(String strBits) {
+        this.strBits = strBits == null ? null : strBits.trim();
+    }
+
+    public String getStrUnit() {
+        return strUnit;
+    }
+
+    public void setStrUnit(String strUnit) {
+        this.strUnit = strUnit == null ? null : strUnit.trim();
+    }
+
+    public String getStrNumberType() {
+        return strNumberType;
+    }
+
+    public void setStrNumberType(String strNumberType) {
+        this.strNumberType = strNumberType == null ? null : strNumberType.trim();
     }
 
     public String getStrId() {
