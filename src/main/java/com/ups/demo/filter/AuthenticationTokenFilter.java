@@ -1,7 +1,13 @@
 package com.ups.demo.filter;
 
+import com.auth0.jwt.interfaces.Claim;
+import com.ups.demo.dao.UserLogInfoMapper;
+import com.ups.demo.dao.UserMapper;
+import com.ups.demo.pojo.User;
+import com.ups.demo.pojo.UserLogInfo;
 import com.ups.demo.service.TokenService;
 import com.ups.demo.utils.GetIPAddress;
+import com.ups.demo.utils.JwtToken;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +25,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * 从request中获取token，并把token转换成用户，放置到当前的spring context内。
@@ -29,7 +36,11 @@ import java.io.IOException;
 public class AuthenticationTokenFilter extends OncePerRequestFilter {
     private final static Log log = LogFactory.getLog(AuthenticationTokenFilter.class);
 
-    TokenService tokenService = new TokenService();// AuthTokenConfig new 了这个filter类
+    private TokenService tokenService = new TokenService();// AuthTokenConfig new 了这个filter类
+    @Autowired
+    private UserLogInfoMapper userLogInfoMapper;
+    @Autowired
+    private UserMapper userMapper;
     // 如果这里的tokenService用@Autowired自动注入,那么这个对象的tokenService将会是null
     //如果不用 AuthTokenConfig配置 则可直接@Autowired注入(主要是该类new了这个filter)
 
@@ -50,14 +61,27 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
         }
         
         if (authToken != null) {
+            boolean flag = false;
             UserDetails user = null;
             //查询token对应的用户
             try {
-                user = tokenService.getUserFromToken(authToken);
+                //检查token的有效性
+                Map<String, Claim> claimMap = JwtToken.verifyToken(authToken);
+                if(claimMap != null) {
+                    //出于安全考虑这里即使丢失了spring tokenMap里的用户临时登录信息也不找回
+                    //用户再次登陆即可获得相应信息
+//                    if(!TokenService.tokenMap.containsKey(authToken)) {
+//                        String userName = userLogInfoMapper.selectByToken(authToken);
+//                        User user2 = userMapper.selectByPrimaryKey(userName);
+//                        TokenService.tokenMap.put(authToken,tokenService.createUser(user2.getStrName(),user2.getStrPassword(),new String[]{user2.getStrRank()}));
+//                    }
+                    flag = true;
+                    user = tokenService.getUserFromToken(authToken);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            if(user != null) {
+            if(user != null && flag == true) {
                 // 把user设置到SecurityContextHolder内，以spring使用
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null,
                         user.getAuthorities());

@@ -1,5 +1,8 @@
 package com.ups.demo.pojo;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ModelSeriesKey {
     private String strModelId;
 

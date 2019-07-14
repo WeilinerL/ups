@@ -1,6 +1,7 @@
 package com.ups.demo.controller;
 
 import com.ups.demo.pojo.Device;
+import com.ups.demo.pojo.DeviceListHome;
 import com.ups.demo.service.DeviceService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -21,9 +22,10 @@ public class DeviceController {
 
     private final static Log log = LogFactory.getLog(DeviceController.class);
 
+    //注册用户都有资格访问所有设备
     @GetMapping
-    @PreAuthorize("hasRole('reader')")
-    public List<Device> getAll() {
+    @PreAuthorize("hasAnyRole('reader','admin')")
+    public List<DeviceListHome> getAll() {
         if(log.isTraceEnabled()) {
             log.trace("get all devices");
         }
