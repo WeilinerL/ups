@@ -5,6 +5,9 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.ups.demo.controller.DeviceController;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.util.StringUtils;
 
 import java.util.Calendar;
@@ -24,6 +27,8 @@ public class JwtToken {
     public static final int calendarField = Calendar.DATE;
     // token 有效期一天
     public static final int calendarInterval = 1;
+
+    private final static Log log = LogFactory.getLog(DeviceController.class);
 
     /**
      * JWT生成Token.<br/>
@@ -72,7 +77,10 @@ public class JwtToken {
         } catch (Exception e) {
             // e.printStackTrace();
             // token 校验失败, 抛出Token验证非法异常
-            System.out.println("token效验失败!");
+            if(log.isTraceEnabled()) {
+                log.trace("token效验失败!");
+            }
+            //System.out.println("token效验失败!");
             return null;
 //            throw new Exception("token效验失败!");
         }
@@ -85,12 +93,15 @@ public class JwtToken {
      * @param token
      * @return user_id
      */
-    public static Long getAppUID(String token) throws Exception{
+    public static Long getAppUID(String token) {
         Map<String, Claim> claims = verifyToken(token);
         Claim user_id_claim = claims.get("user_id");
         if (null == user_id_claim || StringUtils.isEmpty(user_id_claim.asString())) {
             // token 校验失败, 抛出Token验证非法异常
-            throw new Exception("token非法异常!");
+            if(log.isTraceEnabled()) {
+                log.trace("token非法异常!");
+            }
+            //throw new Exception("token非法异常!");
         }
         return Long.valueOf(user_id_claim.asString());
     }

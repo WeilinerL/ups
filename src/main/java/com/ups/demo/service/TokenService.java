@@ -111,6 +111,10 @@ public class TokenService {
             if(log.isTraceEnabled()) {
                 log.trace("第一次登录或原登录token令牌已失效");
             }
+            //删除相应用户的登录信息
+            if(userLogInfoMapper.selectByPrimaryKey(userName) != null) {
+                userLogInfoMapper.deleteByPrimaryKey(userName);
+            }
             return login(userName,password,userAgent);
         }
     }

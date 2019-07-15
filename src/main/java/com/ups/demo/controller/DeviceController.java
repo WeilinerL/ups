@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/device_list")
+@RequestMapping(value = "/")
 public class DeviceController {
     @Autowired
     private DeviceService deviceService;
@@ -23,12 +23,18 @@ public class DeviceController {
     private final static Log log = LogFactory.getLog(DeviceController.class);
 
     //注册用户都有资格访问所有设备
-    @GetMapping
+    @GetMapping(value = "device_list")
     @PreAuthorize("hasAnyRole('reader','admin')")
     public List<DeviceListHome> getAll() {
         if(log.isTraceEnabled()) {
             log.trace("get all devices");
         }
         return deviceService.getAllDevice();
+    }
+
+    @GetMapping(value = "device_group")
+    @PreAuthorize("hasAnyRole('reader','admin')")
+    public String getDeviceGroup() {
+        return "writing...";
     }
 }

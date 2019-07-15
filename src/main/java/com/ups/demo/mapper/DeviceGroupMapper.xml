@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ups.demo.dao.DeviceGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.ups.demo.pojo.DeviceGroupKey" >
+    <id column="str_group_name" property="strGroupName" jdbcType="VARCHAR" />
+    <id column="str_device_id" property="strDeviceId" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.ups.demo.pojo.DeviceGroupKey" >
+    delete from t_device_group
+    where str_group_name = #{strGroupName,jdbcType=VARCHAR}
+      and str_device_id = #{strDeviceId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ups.demo.pojo.DeviceGroupKey" >
+    insert into t_device_group (str_group_name, str_device_id)
+    values (#{strGroupName,jdbcType=VARCHAR}, #{strDeviceId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ups.demo.pojo.DeviceGroupKey" >
+    insert into t_device_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="strGroupName != null" >
+        str_group_name,
+      </if>
+      <if test="strDeviceId != null" >
+        str_device_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="strGroupName != null" >
+        #{strGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="strDeviceId != null" >
+        #{strDeviceId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
