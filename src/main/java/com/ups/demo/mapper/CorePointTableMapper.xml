@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ups.demo.dao.CorePointTableMapper">
+  <resultMap id="BaseResultMap" type="com.ups.demo.pojo.CorePointTable">
+    <result column="int_core_id" jdbcType="INTEGER" property="intCoreId" />
+    <result column="int_dtype_id" jdbcType="INTEGER" property="intDtypeId" />
+    <result column="str_data_name" jdbcType="VARCHAR" property="strDataName" />
+    <result column="int_data_range_min" jdbcType="INTEGER" property="intDataRangeMin" />
+    <result column="int_data_range_max" jdbcType="INTEGER" property="intDataRangeMax" />
+    <result column="str_data_unit" jdbcType="VARCHAR" property="strDataUnit" />
+    <result column="str_alarm_rules" jdbcType="VARCHAR" property="strAlarmRules" />
+  </resultMap>
+  <insert id="insert" parameterType="com.ups.demo.pojo.CorePointTable">
+    insert into t_core_point_table (int_core_id, int_dtype_id, str_data_name, 
+      int_data_range_min, int_data_range_max, str_data_unit, 
+      str_alarm_rules)
+    values (#{intCoreId,jdbcType=INTEGER}, #{intDtypeId,jdbcType=INTEGER}, #{strDataName,jdbcType=VARCHAR}, 
+      #{intDataRangeMin,jdbcType=INTEGER}, #{intDataRangeMax,jdbcType=INTEGER}, #{strDataUnit,jdbcType=VARCHAR}, 
+      #{strAlarmRules,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ups.demo.pojo.CorePointTable">
+    insert into t_core_point_table
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="intCoreId != null">
+        int_core_id,
+      </if>
+      <if test="intDtypeId != null">
+        int_dtype_id,
+      </if>
+      <if test="strDataName != null">
+        str_data_name,
+      </if>
+      <if test="intDataRangeMin != null">
+        int_data_range_min,
+      </if>
+      <if test="intDataRangeMax != null">
+        int_data_range_max,
+      </if>
+      <if test="strDataUnit != null">
+        str_data_unit,
+      </if>
+      <if test="strAlarmRules != null">
+        str_alarm_rules,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="intCoreId != null">
+        #{intCoreId,jdbcType=INTEGER},
+      </if>
+      <if test="intDtypeId != null">
+        #{intDtypeId,jdbcType=INTEGER},
+      </if>
+      <if test="strDataName != null">
+        #{strDataName,jdbcType=VARCHAR},
+      </if>
+      <if test="intDataRangeMin != null">
+        #{intDataRangeMin,jdbcType=INTEGER},
+      </if>
+      <if test="intDataRangeMax != null">
+        #{intDataRangeMax,jdbcType=INTEGER},
+      </if>
+      <if test="strDataUnit != null">
+        #{strDataUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="strAlarmRules != null">
+        #{strAlarmRules,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <resultMap id="BaseResultMap" type="com.ups.demo.pojo.CorePointTable">
+    <id column="str_core_id" jdbcType="VARCHAR" property="strCoreId" />
+    <result column="str_data_name" jdbcType="VARCHAR" property="strDataName" />
+    <result column="str_data_range" jdbcType="VARCHAR" property="strDataRange" />
+    <result column="str_data_unit" jdbcType="VARCHAR" property="strDataUnit" />
+    <result column="str_alarm_rules" jdbcType="VARCHAR" property="strAlarmRules" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    str_core_id, str_data_name, str_data_range, str_data_unit, str_alarm_rules
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_core_point_table
+    where str_core_id = #{strCoreId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_core_point_table
+    where str_core_id = #{strCoreId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ups.demo.pojo.CorePointTable">
+    insert into t_core_point_table (str_core_id, str_data_name, str_data_range, 
+      str_data_unit, str_alarm_rules)
+    values (#{strCoreId,jdbcType=VARCHAR}, #{strDataName,jdbcType=VARCHAR}, #{strDataRange,jdbcType=VARCHAR}, 
+      #{strDataUnit,jdbcType=VARCHAR}, #{strAlarmRules,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ups.demo.pojo.CorePointTable">
+    insert into t_core_point_table
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="strCoreId != null">
+        str_core_id,
+      </if>
+      <if test="strDataName != null">
+        str_data_name,
+      </if>
+      <if test="strDataRange != null">
+        str_data_range,
+      </if>
+      <if test="strDataUnit != null">
+        str_data_unit,
+      </if>
+      <if test="strAlarmRules != null">
+        str_alarm_rules,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="strCoreId != null">
+        #{strCoreId,jdbcType=VARCHAR},
+      </if>
+      <if test="strDataName != null">
+        #{strDataName,jdbcType=VARCHAR},
+      </if>
+      <if test="strDataRange != null">
+        #{strDataRange,jdbcType=VARCHAR},
+      </if>
+      <if test="strDataUnit != null">
+        #{strDataUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="strAlarmRules != null">
+        #{strAlarmRules,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ups.demo.pojo.CorePointTable">
+    update t_core_point_table
+    <set>
+      <if test="strDataName != null">
+        str_data_name = #{strDataName,jdbcType=VARCHAR},
+      </if>
+      <if test="strDataRange != null">
+        str_data_range = #{strDataRange,jdbcType=VARCHAR},
+      </if>
+      <if test="strDataUnit != null">
+        str_data_unit = #{strDataUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="strAlarmRules != null">
+        str_alarm_rules = #{strAlarmRules,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where str_core_id = #{strCoreId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ups.demo.pojo.CorePointTable">
+    update t_core_point_table
+    set str_data_name = #{strDataName,jdbcType=VARCHAR},
+      str_data_range = #{strDataRange,jdbcType=VARCHAR},
+      str_data_unit = #{strDataUnit,jdbcType=VARCHAR},
+      str_alarm_rules = #{strAlarmRules,jdbcType=VARCHAR}
+    where str_core_id = #{strCoreId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -24,10 +24,11 @@ public class DeviceController {
     @GetMapping(value = "device_list")
     @PreAuthorize("hasAnyRole('reader','admin')")
     public List<DeviceListHome> getAll() {
-        if(log.isTraceEnabled()) {
+        if (log.isTraceEnabled()) {
             log.trace("get all devices");
         }
-        return deviceService.getAllDevice();
+//        return deviceService.getAllDevice();
+        return null;
     }
 
     @GetMapping(value = "device_group")

@@ -2,6 +2,10 @@ package com.ups.demo.service;
 
 import com.auth0.jwt.interfaces.Claim;
 import com.ups.demo.controller.LoginController;
+import com.ups.demo.dao.UserLogInfoMapper;
+import com.ups.demo.dao.UserMapper;
+import com.ups.demo.pojo.User;
+import com.ups.demo.pojo.UserLogInfo;
 import com.ups.demo.utils.JwtToken;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

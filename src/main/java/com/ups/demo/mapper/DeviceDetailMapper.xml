@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ups.demo.dao.DeviceDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.ups.demo.pojo.DeviceDetail" >
+    <id column="int_detail_id" property="intDetailId" jdbcType="INTEGER" />
+    <result column="int_dtype_id" property="intDtypeId" jdbcType="INTEGER" />
+    <result column="str_device_brand" property="strDeviceBrand" jdbcType="VARCHAR" />
+    <result column="str_device_series" property="strDeviceSeries" jdbcType="VARCHAR" />
+    <result column="str_device_model" property="strDeviceModel" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    int_detail_id, int_dtype_id, str_device_brand, str_device_series, str_device_model
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_device_detail
+    where int_detail_id = #{intDetailId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_device_detail
+    where int_detail_id = #{intDetailId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ups.demo.pojo.DeviceDetail" >
+    insert into t_device_detail (int_detail_id, int_dtype_id, str_device_brand, 
+      str_device_series, str_device_model)
+    values (#{intDetailId,jdbcType=INTEGER}, #{intDtypeId,jdbcType=INTEGER}, #{strDeviceBrand,jdbcType=VARCHAR}, 
+      #{strDeviceSeries,jdbcType=VARCHAR}, #{strDeviceModel,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ups.demo.pojo.DeviceDetail" >
+    insert into t_device_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="intDetailId != null" >
+        int_detail_id,
+      </if>
+      <if test="intDtypeId != null" >
+        int_dtype_id,
+      </if>
+      <if test="strDeviceBrand != null" >
+        str_device_brand,
+      </if>
+      <if test="strDeviceSeries != null" >
+        str_device_series,
+      </if>
+      <if test="strDeviceModel != null" >
+        str_device_model,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="intDetailId != null" >
+        #{intDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="intDtypeId != null" >
+        #{intDtypeId,jdbcType=INTEGER},
+      </if>
+      <if test="strDeviceBrand != null" >
+        #{strDeviceBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="strDeviceSeries != null" >
+        #{strDeviceSeries,jdbcType=VARCHAR},
+      </if>
+      <if test="strDeviceModel != null" >
+        #{strDeviceModel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ups.demo.pojo.DeviceDetail" >
+    update t_device_detail
+    <set >
+      <if test="intDtypeId != null" >
+        int_dtype_id = #{intDtypeId,jdbcType=INTEGER},
+      </if>
+      <if test="strDeviceBrand != null" >
+        str_device_brand = #{strDeviceBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="strDeviceSeries != null" >
+        str_device_series = #{strDeviceSeries,jdbcType=VARCHAR},
+      </if>
+      <if test="strDeviceModel != null" >
+        str_device_model = #{strDeviceModel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where int_detail_id = #{intDetailId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ups.demo.pojo.DeviceDetail" >
+    update t_device_detail
+    set int_dtype_id = #{intDtypeId,jdbcType=INTEGER},
+      str_device_brand = #{strDeviceBrand,jdbcType=VARCHAR},
+      str_device_series = #{strDeviceSeries,jdbcType=VARCHAR},
+      str_device_model = #{strDeviceModel,jdbcType=VARCHAR}
+    where int_detail_id = #{intDetailId,jdbcType=INTEGER}
+  </update>
+</mapper>

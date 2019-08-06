@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ups.demo.dao.UserLogInfoMapper">
+  <resultMap id="BaseResultMap" type="com.ups.demo.pojo.UserLogInfo">
+    <id column="str_username" jdbcType="VARCHAR" property="strUsername" />
+    <result column="str_token" jdbcType="VARCHAR" property="strToken" />
+    <result column="str_user_agent" jdbcType="VARCHAR" property="strUserAgent" />
+    <result column="str_login_time" jdbcType="VARCHAR" property="strLoginTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    str_username, str_token, str_user_agent, str_login_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_log_info
+    where str_username = #{strUsername,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_user_log_info
+    where str_username = #{strUsername,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ups.demo.pojo.UserLogInfo">
+    insert into t_user_log_info (str_username, str_token, str_user_agent, 
+      str_login_time)
+    values (#{strUsername,jdbcType=VARCHAR}, #{strToken,jdbcType=VARCHAR}, #{strUserAgent,jdbcType=VARCHAR}, 
+      #{strLoginTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ups.demo.pojo.UserLogInfo">
+    insert into t_user_log_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="strUsername != null">
+        str_username,
+      </if>
+      <if test="strToken != null">
+        str_token,
+      </if>
+      <if test="strUserAgent != null">
+        str_user_agent,
+      </if>
+      <if test="strLoginTime != null">
+        str_login_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="strUsername != null">
+        #{strUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="strToken != null">
+        #{strToken,jdbcType=VARCHAR},
+      </if>
+      <if test="strUserAgent != null">
+        #{strUserAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="strLoginTime != null">
+        #{strLoginTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ups.demo.pojo.UserLogInfo">
+    update t_user_log_info
+    <set>
+      <if test="strToken != null">
+        str_token = #{strToken,jdbcType=VARCHAR},
+      </if>
+      <if test="strUserAgent != null">
+        str_user_agent = #{strUserAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="strLoginTime != null">
+        str_login_time = #{strLoginTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where str_username = #{strUsername,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ups.demo.pojo.UserLogInfo">
+    update t_user_log_info
+    set str_token = #{strToken,jdbcType=VARCHAR},
+      str_user_agent = #{strUserAgent,jdbcType=VARCHAR},
+      str_login_time = #{strLoginTime,jdbcType=VARCHAR}
+    where str_username = #{strUsername,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.ups.demo.pojo.UserLogInfo">
+    <id column="str_username" jdbcType="VARCHAR" property="strUsername" />
+    <result column="str_token" jdbcType="VARCHAR" property="strToken" />
+    <result column="str_user_agent" jdbcType="VARCHAR" property="strUserAgent" />
+    <result column="str_login_time" jdbcType="VARCHAR" property="strLoginTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    str_username, str_token, str_user_agent, str_login_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_log_info
+    where str_username = #{strUsername,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_user_log_info
+    where str_username = #{strUsername,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ups.demo.pojo.UserLogInfo">
+    insert into t_user_log_info (str_username, str_token, str_user_agent, 
+      str_login_time)
+    values (#{strUsername,jdbcType=VARCHAR}, #{strToken,jdbcType=VARCHAR}, #{strUserAgent,jdbcType=VARCHAR}, 
+      #{strLoginTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ups.demo.pojo.UserLogInfo">
+    insert into t_user_log_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="strUsername != null">
+        str_username,
+      </if>
+      <if test="strToken != null">
+        str_token,
+      </if>
+      <if test="strUserAgent != null">
+        str_user_agent,
+      </if>
+      <if test="strLoginTime != null">
+        str_login_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="strUsername != null">
+        #{strUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="strToken != null">
+        #{strToken,jdbcType=VARCHAR},
+      </if>
+      <if test="strUserAgent != null">
+        #{strUserAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="strLoginTime != null">
+        #{strLoginTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ups.demo.pojo.UserLogInfo">
+    update t_user_log_info
+    <set>
+      <if test="strToken != null">
+        str_token = #{strToken,jdbcType=VARCHAR},
+      </if>
+      <if test="strUserAgent != null">
+        str_user_agent = #{strUserAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="strLoginTime != null">
+        str_login_time = #{strLoginTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where str_username = #{strUsername,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ups.demo.pojo.UserLogInfo">
+    update t_user_log_info
+    set str_token = #{strToken,jdbcType=VARCHAR},
+      str_user_agent = #{strUserAgent,jdbcType=VARCHAR},
+      str_login_time = #{strLoginTime,jdbcType=VARCHAR}
+    where str_username = #{strUsername,jdbcType=VARCHAR}
+  </update>
+</mapper>
