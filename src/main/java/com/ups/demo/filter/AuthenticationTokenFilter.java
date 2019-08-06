@@ -3,8 +3,6 @@ package com.ups.demo.filter;
 import com.auth0.jwt.interfaces.Claim;
 import com.ups.demo.dao.UserLogInfoMapper;
 import com.ups.demo.dao.UserMapper;
-import com.ups.demo.pojo.User;
-import com.ups.demo.pojo.UserLogInfo;
 import com.ups.demo.service.TokenService;
 import com.ups.demo.utils.GetIPAddress;
 import com.ups.demo.utils.JwtToken;
@@ -15,13 +13,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

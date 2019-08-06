@@ -1,6 +1,5 @@
 package com.ups.demo.controller;
 
-import com.ups.demo.pojo.Device;
 import com.ups.demo.pojo.DeviceListHome;
 import com.ups.demo.service.DeviceService;
 import org.apache.commons.logging.Log;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
