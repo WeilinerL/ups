@@ -5,13 +5,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface DeviceMapper {
-    int deleteByPrimaryKey(String strId);
+    int deleteByPrimaryKey(Integer intDeviceId);
 
     int insert(Device record);
 
     int insertSelective(Device record);
 
-    Device selectByPrimaryKey(String strId);
+    Device selectByPrimaryKey(Integer intDeviceId);
 
     int updateByPrimaryKeySelective(Device record);
 

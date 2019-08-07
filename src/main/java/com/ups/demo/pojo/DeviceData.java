@@ -3,26 +3,18 @@ package com.ups.demo.pojo;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Data {
-    private String strReadTime;
-
+public class DeviceData {
     private Integer intDataId;
 
     private Integer intDeviceId;
 
     private String strDataName;
 
+    private String strReadTime;
+
     private Double doubleReadValues;
 
     private String strNumberType;
-
-    public String getStrReadTime() {
-        return strReadTime;
-    }
-
-    public void setStrReadTime(String strReadTime) {
-        this.strReadTime = strReadTime == null ? null : strReadTime.trim();
-    }
 
     public Integer getIntDataId() {
         return intDataId;
@@ -46,6 +38,14 @@ public class Data {
 
     public void setStrDataName(String strDataName) {
         this.strDataName = strDataName == null ? null : strDataName.trim();
+    }
+
+    public String getStrReadTime() {
+        return strReadTime;
+    }
+
+    public void setStrReadTime(String strReadTime) {
+        this.strReadTime = strReadTime == null ? null : strReadTime.trim();
     }
 
     public Double getDoubleReadValues() {

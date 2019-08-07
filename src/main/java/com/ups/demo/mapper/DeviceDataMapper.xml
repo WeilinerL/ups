@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ups.demo.dao.DeviceDataMapper" >
+  <resultMap id="BaseResultMap" type="com.ups.demo.pojo.DeviceData" >
+    <id column="int_data_id" property="intDataId" jdbcType="INTEGER" />
+    <result column="int_device_id" property="intDeviceId" jdbcType="INTEGER" />
+    <result column="str_data_name" property="strDataName" jdbcType="VARCHAR" />
+    <result column="str_read_time" property="strReadTime" jdbcType="VARCHAR" />
+    <result column="double_read_values" property="doubleReadValues" jdbcType="DOUBLE" />
+    <result column="str_number_type" property="strNumberType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    int_data_id, int_device_id, str_data_name, str_read_time, double_read_values, str_number_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_data
+    where int_data_id = #{intDataId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_data
+    where int_data_id = #{intDataId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ups.demo.pojo.DeviceData" >
+    insert into t_data (int_data_id, int_device_id, str_data_name, 
+      str_read_time, double_read_values, str_number_type
+      )
+    values (#{intDataId,jdbcType=INTEGER}, #{intDeviceId,jdbcType=INTEGER}, #{strDataName,jdbcType=VARCHAR}, 
+      #{strReadTime,jdbcType=VARCHAR}, #{doubleReadValues,jdbcType=DOUBLE}, #{strNumberType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ups.demo.pojo.DeviceData" >
+    insert into t_data
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="intDataId != null" >
+        int_data_id,
+      </if>
+      <if test="intDeviceId != null" >
+        int_device_id,
+      </if>
+      <if test="strDataName != null" >
+        str_data_name,
+      </if>
+      <if test="strReadTime != null" >
+        str_read_time,
+      </if>
+      <if test="doubleReadValues != null" >
+        double_read_values,
+      </if>
+      <if test="strNumberType != null" >
+        str_number_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="intDataId != null" >
+        #{intDataId,jdbcType=INTEGER},
+      </if>
+      <if test="intDeviceId != null" >
+        #{intDeviceId,jdbcType=INTEGER},
+      </if>
+      <if test="strDataName != null" >
+        #{strDataName,jdbcType=VARCHAR},
+      </if>
+      <if test="strReadTime != null" >
+        #{strReadTime,jdbcType=VARCHAR},
+      </if>
+      <if test="doubleReadValues != null" >
+        #{doubleReadValues,jdbcType=DOUBLE},
+      </if>
+      <if test="strNumberType != null" >
+        #{strNumberType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ups.demo.pojo.DeviceData" >
+    update t_data
+    <set >
+      <if test="intDeviceId != null" >
+        int_device_id = #{intDeviceId,jdbcType=INTEGER},
+      </if>
+      <if test="strDataName != null" >
+        str_data_name = #{strDataName,jdbcType=VARCHAR},
+      </if>
+      <if test="strReadTime != null" >
+        str_read_time = #{strReadTime,jdbcType=VARCHAR},
+      </if>
+      <if test="doubleReadValues != null" >
+        double_read_values = #{doubleReadValues,jdbcType=DOUBLE},
+      </if>
+      <if test="strNumberType != null" >
+        str_number_type = #{strNumberType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where int_data_id = #{intDataId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ups.demo.pojo.DeviceData" >
+    update t_data
+    set int_device_id = #{intDeviceId,jdbcType=INTEGER},
+      str_data_name = #{strDataName,jdbcType=VARCHAR},
+      str_read_time = #{strReadTime,jdbcType=VARCHAR},
+      double_read_values = #{doubleReadValues,jdbcType=DOUBLE},
+      str_number_type = #{strNumberType,jdbcType=VARCHAR}
+    where int_data_id = #{intDataId,jdbcType=INTEGER}
+  </update>
+</mapper>

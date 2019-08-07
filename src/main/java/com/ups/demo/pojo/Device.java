@@ -4,20 +4,38 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Device {
-    private String strId;
+    private Integer intDeviceId;
+
+    private Integer intCoreId;
+
+    private Integer intUserId;
 
     private String strDeviceName;
 
-    private String strModelId;
-
     private String strDeviceAddress;
 
-    public String getStrId() {
-        return strId;
+    public Integer getIntDeviceId() {
+        return intDeviceId;
     }
 
-    public void setStrId(String strId) {
-        this.strId = strId == null ? null : strId.trim();
+    public void setIntDeviceId(Integer intDeviceId) {
+        this.intDeviceId = intDeviceId;
+    }
+
+    public Integer getIntCoreId() {
+        return intCoreId;
+    }
+
+    public void setIntCoreId(Integer intCoreId) {
+        this.intCoreId = intCoreId;
+    }
+
+    public Integer getIntUserId() {
+        return intUserId;
+    }
+
+    public void setIntUserId(Integer intUserId) {
+        this.intUserId = intUserId;
     }
 
     public String getStrDeviceName() {
@@ -26,14 +44,6 @@ public class Device {
 
     public void setStrDeviceName(String strDeviceName) {
         this.strDeviceName = strDeviceName == null ? null : strDeviceName.trim();
-    }
-
-    public String getStrModelId() {
-        return strModelId;
-    }
-
-    public void setStrModelId(String strModelId) {
-        this.strModelId = strModelId == null ? null : strModelId.trim();
     }
 
     public String getStrDeviceAddress() {

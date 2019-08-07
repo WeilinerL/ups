@@ -1,143 +1,32 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ups.demo.dao.UserMapper">
-  <resultMap id="BaseResultMap" type="com.ups.demo.pojo.User">
-    <id column="str_user_id" jdbcType="VARCHAR" property="strUserId" />
-    <result column="str_tel_number" jdbcType="VARCHAR" property="strTelNumber" />
-    <result column="str_password" jdbcType="VARCHAR" property="strPassword" />
-    <result column="str_nickname" jdbcType="VARCHAR" property="strNickname" />
-    <result column="str_sex" jdbcType="VARCHAR" property="strSex" />
-    <result column="str_name" jdbcType="VARCHAR" property="strName" />
-    <result column="str_address" jdbcType="VARCHAR" property="strAddress" />
-    <result column="str_rank" jdbcType="VARCHAR" property="strRank" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ups.demo.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.ups.demo.pojo.User" >
+    <id column="int_user_id" property="intUserId" jdbcType="INTEGER" />
+    <result column="str_tel_number" property="strTelNumber" jdbcType="VARCHAR" />
+    <result column="str_password" property="strPassword" jdbcType="VARCHAR" />
+    <result column="str_nickname" property="strNickname" jdbcType="VARCHAR" />
+    <result column="str_sex" property="strSex" jdbcType="VARCHAR" />
+    <result column="str_real_name" property="strRealName" jdbcType="VARCHAR" />
+    <result column="str_address" property="strAddress" jdbcType="VARCHAR" />
+    <result column="str_email" property="strEmail" jdbcType="VARCHAR" />
+    <result column="str_user_type" property="strUserType" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Base_Column_List">
-    str_user_id, str_tel_number, str_password, str_nickname, str_sex, str_name, str_address, 
-    str_rank
+  <sql id="Base_Column_List" >
+    int_user_id, str_tel_number, str_password, str_nickname, str_sex, str_real_name, 
+    str_address, str_email, str_user_type
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from t_user
-    where str_user_id = #{strUserId,jdbcType=VARCHAR}
+    where int_user_id = #{intUserId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_user
-    where str_user_id = #{strUserId,jdbcType=VARCHAR}
+    where int_user_id = #{intUserId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.ups.demo.pojo.User">
-    insert into t_user (str_user_id, str_tel_number, str_password, 
-      str_nickname, str_sex, str_name, 
-      str_address, str_rank)
-    values (#{strUserId,jdbcType=VARCHAR}, #{strTelNumber,jdbcType=VARCHAR}, #{strPassword,jdbcType=VARCHAR}, 
-      #{strNickname,jdbcType=VARCHAR}, #{strSex,jdbcType=VARCHAR}, #{strName,jdbcType=VARCHAR}, 
-      #{strAddress,jdbcType=VARCHAR}, #{strRank,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.ups.demo.pojo.User">
-    insert into t_user
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="strUserId != null">
-        str_user_id,
-      </if>
-      <if test="strTelNumber != null">
-        str_tel_number,
-      </if>
-      <if test="strPassword != null">
-        str_password,
-      </if>
-      <if test="strNickname != null">
-        str_nickname,
-      </if>
-      <if test="strSex != null">
-        str_sex,
-      </if>
-      <if test="strName != null">
-        str_name,
-      </if>
-      <if test="strAddress != null">
-        str_address,
-      </if>
-      <if test="strRank != null">
-        str_rank,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="strUserId != null">
-        #{strUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="strTelNumber != null">
-        #{strTelNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="strPassword != null">
-        #{strPassword,jdbcType=VARCHAR},
-      </if>
-      <if test="strNickname != null">
-        #{strNickname,jdbcType=VARCHAR},
-      </if>
-      <if test="strSex != null">
-        #{strSex,jdbcType=VARCHAR},
-      </if>
-      <if test="strName != null">
-        #{strName,jdbcType=VARCHAR},
-      </if>
-      <if test="strAddress != null">
-        #{strAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="strRank != null">
-        #{strRank,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ups.demo.pojo.User">
-    update t_user
-    <set>
-      <if test="strTelNumber != null">
-        str_tel_number = #{strTelNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="strPassword != null">
-        str_password = #{strPassword,jdbcType=VARCHAR},
-      </if>
-      <if test="strNickname != null">
-        str_nickname = #{strNickname,jdbcType=VARCHAR},
-      </if>
-      <if test="strSex != null">
-        str_sex = #{strSex,jdbcType=VARCHAR},
-      </if>
-      <if test="strName != null">
-        str_name = #{strName,jdbcType=VARCHAR},
-      </if>
-      <if test="strAddress != null">
-        str_address = #{strAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="strRank != null">
-        str_rank = #{strRank,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where str_user_id = #{strUserId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ups.demo.pojo.User">
-    update t_user
-    set str_tel_number = #{strTelNumber,jdbcType=VARCHAR},
-      str_password = #{strPassword,jdbcType=VARCHAR},
-      str_nickname = #{strNickname,jdbcType=VARCHAR},
-      str_sex = #{strSex,jdbcType=VARCHAR},
-      str_name = #{strName,jdbcType=VARCHAR},
-      str_address = #{strAddress,jdbcType=VARCHAR},
-      str_rank = #{strRank,jdbcType=VARCHAR}
-    where str_user_id = #{strUserId,jdbcType=VARCHAR}
-  </update>
-  <resultMap id="BaseResultMap" type="com.ups.demo.pojo.User">
-    <result column="int_user_id" jdbcType="INTEGER" property="intUserId" />
-    <result column="str_tel_number" jdbcType="VARCHAR" property="strTelNumber" />
-    <result column="str_password" jdbcType="VARCHAR" property="strPassword" />
-    <result column="str_nickname" jdbcType="VARCHAR" property="strNickname" />
-    <result column="str_sex" jdbcType="VARCHAR" property="strSex" />
-    <result column="str_real_name" jdbcType="VARCHAR" property="strRealName" />
-    <result column="str_address" jdbcType="VARCHAR" property="strAddress" />
-    <result column="str_email" jdbcType="VARCHAR" property="strEmail" />
-    <result column="str_user_type" jdbcType="VARCHAR" property="strUserType" />
-  </resultMap>
-  <insert id="insert" parameterType="com.ups.demo.pojo.User">
+  <insert id="insert" parameterType="com.ups.demo.pojo.User" >
     insert into t_user (int_user_id, str_tel_number, str_password, 
       str_nickname, str_sex, str_real_name, 
       str_address, str_email, str_user_type
@@ -147,65 +36,107 @@
       #{strAddress,jdbcType=VARCHAR}, #{strEmail,jdbcType=VARCHAR}, #{strUserType,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.ups.demo.pojo.User">
+  <insert id="insertSelective" parameterType="com.ups.demo.pojo.User" >
     insert into t_user
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="intUserId != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="intUserId != null" >
         int_user_id,
       </if>
-      <if test="strTelNumber != null">
+      <if test="strTelNumber != null" >
         str_tel_number,
       </if>
-      <if test="strPassword != null">
+      <if test="strPassword != null" >
         str_password,
       </if>
-      <if test="strNickname != null">
+      <if test="strNickname != null" >
         str_nickname,
       </if>
-      <if test="strSex != null">
+      <if test="strSex != null" >
         str_sex,
       </if>
-      <if test="strRealName != null">
+      <if test="strRealName != null" >
         str_real_name,
       </if>
-      <if test="strAddress != null">
+      <if test="strAddress != null" >
         str_address,
       </if>
-      <if test="strEmail != null">
+      <if test="strEmail != null" >
         str_email,
       </if>
-      <if test="strUserType != null">
+      <if test="strUserType != null" >
         str_user_type,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="intUserId != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="intUserId != null" >
         #{intUserId,jdbcType=INTEGER},
       </if>
-      <if test="strTelNumber != null">
+      <if test="strTelNumber != null" >
         #{strTelNumber,jdbcType=VARCHAR},
       </if>
-      <if test="strPassword != null">
+      <if test="strPassword != null" >
         #{strPassword,jdbcType=VARCHAR},
       </if>
-      <if test="strNickname != null">
+      <if test="strNickname != null" >
         #{strNickname,jdbcType=VARCHAR},
       </if>
-      <if test="strSex != null">
+      <if test="strSex != null" >
         #{strSex,jdbcType=VARCHAR},
       </if>
-      <if test="strRealName != null">
+      <if test="strRealName != null" >
         #{strRealName,jdbcType=VARCHAR},
       </if>
-      <if test="strAddress != null">
+      <if test="strAddress != null" >
         #{strAddress,jdbcType=VARCHAR},
       </if>
-      <if test="strEmail != null">
+      <if test="strEmail != null" >
         #{strEmail,jdbcType=VARCHAR},
       </if>
-      <if test="strUserType != null">
+      <if test="strUserType != null" >
         #{strUserType,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ups.demo.pojo.User" >
+    update t_user
+    <set >
+      <if test="strTelNumber != null" >
+        str_tel_number = #{strTelNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="strPassword != null" >
+        str_password = #{strPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="strNickname != null" >
+        str_nickname = #{strNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="strSex != null" >
+        str_sex = #{strSex,jdbcType=VARCHAR},
+      </if>
+      <if test="strRealName != null" >
+        str_real_name = #{strRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="strAddress != null" >
+        str_address = #{strAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="strEmail != null" >
+        str_email = #{strEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="strUserType != null" >
+        str_user_type = #{strUserType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where int_user_id = #{intUserId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ups.demo.pojo.User" >
+    update t_user
+    set str_tel_number = #{strTelNumber,jdbcType=VARCHAR},
+      str_password = #{strPassword,jdbcType=VARCHAR},
+      str_nickname = #{strNickname,jdbcType=VARCHAR},
+      str_sex = #{strSex,jdbcType=VARCHAR},
+      str_real_name = #{strRealName,jdbcType=VARCHAR},
+      str_address = #{strAddress,jdbcType=VARCHAR},
+      str_email = #{strEmail,jdbcType=VARCHAR},
+      str_user_type = #{strUserType,jdbcType=VARCHAR}
+    where int_user_id = #{intUserId,jdbcType=INTEGER}
+  </update>
 </mapper>

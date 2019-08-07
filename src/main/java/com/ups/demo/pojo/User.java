@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class User {
-    private String strUserId;
+    private Integer intUserId;
 
     private String strTelNumber;
 
@@ -14,18 +14,20 @@ public class User {
 
     private String strSex;
 
-    private String strName;
+    private String strRealName;
 
     private String strAddress;
 
-    private String strRank;
+    private String strEmail;
 
-    public String getStrUserId() {
-        return strUserId;
+    private String strUserType;
+
+    public Integer getIntUserId() {
+        return intUserId;
     }
 
-    public void setStrUserId(String strUserId) {
-        this.strUserId = strUserId == null ? null : strUserId.trim();
+    public void setIntUserId(Integer intUserId) {
+        this.intUserId = intUserId;
     }
 
     public String getStrTelNumber() {
@@ -60,12 +62,12 @@ public class User {
         this.strSex = strSex == null ? null : strSex.trim();
     }
 
-    public String getStrName() {
-        return strName;
+    public String getStrRealName() {
+        return strRealName;
     }
 
-    public void setStrName(String strName) {
-        this.strName = strName == null ? null : strName.trim();
+    public void setStrRealName(String strRealName) {
+        this.strRealName = strRealName == null ? null : strRealName.trim();
     }
 
     public String getStrAddress() {
@@ -76,11 +78,19 @@ public class User {
         this.strAddress = strAddress == null ? null : strAddress.trim();
     }
 
-    public String getStrRank() {
-        return strRank;
+    public String getStrEmail() {
+        return strEmail;
     }
 
-    public void setStrRank(String strRank) {
-        this.strRank = strRank == null ? null : strRank.trim();
+    public void setStrEmail(String strEmail) {
+        this.strEmail = strEmail == null ? null : strEmail.trim();
+    }
+
+    public String getStrUserType() {
+        return strUserType;
+    }
+
+    public void setStrUserType(String strUserType) {
+        this.strUserType = strUserType == null ? null : strUserType.trim();
     }
 }

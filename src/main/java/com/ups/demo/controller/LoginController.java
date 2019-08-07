@@ -19,7 +19,7 @@ public class LoginController {
     private final static Log log = LogFactory.getLog(LoginController.class);
 
     @Autowired
-    TokenService tokenService;
+    private TokenService tokenService;
 
     @PostMapping(value = "login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> userInfo,

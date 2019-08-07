@@ -91,8 +91,8 @@ public class TokenService {
             }
             //如果spring tokenMap临时信息丢失
             if(!tokenMap.containsKey(userLogInfo.getStrToken())) {
-                User user = userMapper.selectByPrimaryKey(userName);
-                tokenMap.put(userLogInfo.getStrToken(),createUser(userName,password,new String[]{user.getStrRank()}));
+                User user = userMapper.selectByTelNumber(userName);
+                tokenMap.put(userLogInfo.getStrToken(),createUser(userName,password,new String[]{user.getStrUserType()}));
             }
             return userLogInfo.getStrToken();
         }
@@ -128,10 +128,10 @@ public class TokenService {
      */
     public String login(String userName, String password,String userAgent) {
             UserDetails ud = null;
-            User user = userMapper.selectByPrimaryKey(userName);
-            // 支持两种用户：reader/admin
+            User user = userMapper.selectByTelNumber(userName);
+            // 支持两种用户：customerer/admin
             if(user != null && user.getStrPassword().equals(password)) {
-                ud = createUser(userName, password, new String[] {user.getStrRank()});
+                ud = createUser(userName, password, new String[] {user.getStrUserType()});
             }
             if(ud != null) {
                 Date date = new Date();

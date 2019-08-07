@@ -22,7 +22,7 @@ public class DeviceController {
 
     //注册用户都有资格访问所有设备
     @GetMapping(value = "device_list")
-    @PreAuthorize("hasAnyRole('reader','admin')")
+    @PreAuthorize("hasAnyRole('customer','admin')")
     public List<DeviceListHome> getAll() {
         if (log.isTraceEnabled()) {
             log.trace("get all devices");
@@ -32,7 +32,7 @@ public class DeviceController {
     }
 
     @GetMapping(value = "device_group")
-    @PreAuthorize("hasAnyRole('reader','admin')")
+    @PreAuthorize("hasAnyRole('customer','admin')")
     public String getDeviceGroup() {
         return "writing...";
     }

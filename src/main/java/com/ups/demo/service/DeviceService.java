@@ -4,6 +4,7 @@ import com.ups.demo.dao.*;
 import com.ups.demo.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,15 +15,7 @@ import java.util.*;
 public class DeviceService {
 
     @Autowired
-    private DeviceListHome deviceListHome;
-    @Autowired
     private DeviceMapper deviceMapper;
-    @Autowired
-    private DataMapper dataMapper;
-    @Autowired
-    private Device device;
-    @Autowired
-    private Data data;
     //使用事物可以保证数据的一致性和完整性(避免异常和错误等导致的数据信息异常)
 
 
@@ -107,10 +100,10 @@ public class DeviceService {
 
     //查询单个设备
     @Transactional(readOnly = true)
-    public Device getDevice(String deviceId) {
+    public Device getDevice(int deviceId) {
         try {
             Thread.sleep(10);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

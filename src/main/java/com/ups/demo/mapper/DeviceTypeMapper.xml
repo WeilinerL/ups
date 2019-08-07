@@ -1,98 +1,58 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ups.demo.dao.DeviceTypeMapper">
-  <resultMap id="BaseResultMap" type="com.ups.demo.pojo.DeviceType">
-    <id column="str_type_id" jdbcType="VARCHAR" property="strTypeId" />
-    <result column="str_type_name" jdbcType="VARCHAR" property="strTypeName" />
-    <result column="str_core_id" jdbcType="VARCHAR" property="strCoreId" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ups.demo.dao.DeviceTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.ups.demo.pojo.DeviceType" >
+    <id column="int_dtype_id" property="intDtypeId" jdbcType="INTEGER" />
+    <result column="str_type_name" property="strTypeName" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Base_Column_List">
-    str_type_id, str_type_name, str_core_id
+  <sql id="Base_Column_List" >
+    int_dtype_id, str_type_name
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from t_device_type
-    where str_type_id = #{strTypeId,jdbcType=VARCHAR}
+    where int_dtype_id = #{intDtypeId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_device_type
-    where str_type_id = #{strTypeId,jdbcType=VARCHAR}
+    where int_dtype_id = #{intDtypeId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.ups.demo.pojo.DeviceType">
-    insert into t_device_type (str_type_id, str_type_name, str_core_id
-      )
-    values (#{strTypeId,jdbcType=VARCHAR}, #{strTypeName,jdbcType=VARCHAR}, #{strCoreId,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.ups.demo.pojo.DeviceType">
-    insert into t_device_type
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="strTypeId != null">
-        str_type_id,
-      </if>
-      <if test="strTypeName != null">
-        str_type_name,
-      </if>
-      <if test="strCoreId != null">
-        str_core_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="strTypeId != null">
-        #{strTypeId,jdbcType=VARCHAR},
-      </if>
-      <if test="strTypeName != null">
-        #{strTypeName,jdbcType=VARCHAR},
-      </if>
-      <if test="strCoreId != null">
-        #{strCoreId,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ups.demo.pojo.DeviceType">
-    update t_device_type
-    <set>
-      <if test="strTypeName != null">
-        str_type_name = #{strTypeName,jdbcType=VARCHAR},
-      </if>
-      <if test="strCoreId != null">
-        str_core_id = #{strCoreId,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where str_type_id = #{strTypeId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ups.demo.pojo.DeviceType">
-    update t_device_type
-    set str_type_name = #{strTypeName,jdbcType=VARCHAR},
-      str_core_id = #{strCoreId,jdbcType=VARCHAR}
-    where str_type_id = #{strTypeId,jdbcType=VARCHAR}
-  </update>
-  <resultMap id="BaseResultMap" type="com.ups.demo.pojo.DeviceType">
-    <result column="int_dtype_id" jdbcType="INTEGER" property="intDtypeId" />
-    <result column="str_type_name" jdbcType="VARCHAR" property="strTypeName" />
-  </resultMap>
-  <insert id="insert" parameterType="com.ups.demo.pojo.DeviceType">
+  <insert id="insert" parameterType="com.ups.demo.pojo.DeviceType" >
     insert into t_device_type (int_dtype_id, str_type_name)
     values (#{intDtypeId,jdbcType=INTEGER}, #{strTypeName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.ups.demo.pojo.DeviceType">
+  <insert id="insertSelective" parameterType="com.ups.demo.pojo.DeviceType" >
     insert into t_device_type
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="intDtypeId != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="intDtypeId != null" >
         int_dtype_id,
       </if>
-      <if test="strTypeName != null">
+      <if test="strTypeName != null" >
         str_type_name,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="intDtypeId != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="intDtypeId != null" >
         #{intDtypeId,jdbcType=INTEGER},
       </if>
-      <if test="strTypeName != null">
+      <if test="strTypeName != null" >
         #{strTypeName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ups.demo.pojo.DeviceType" >
+    update t_device_type
+    <set >
+      <if test="strTypeName != null" >
+        str_type_name = #{strTypeName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where int_dtype_id = #{intDtypeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ups.demo.pojo.DeviceType" >
+    update t_device_type
+    set str_type_name = #{strTypeName,jdbcType=VARCHAR}
+    where int_dtype_id = #{intDtypeId,jdbcType=INTEGER}
+  </update>
 </mapper>

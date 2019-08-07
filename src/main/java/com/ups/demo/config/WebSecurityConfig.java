@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //默认的spring-security配置会让所有的请求都必须在已登录的状况下访问；下面这段代码禁止了这种操作。
         httpSecurity.csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("user").hasAnyRole("reader","admin").anyRequest().permitAll();
+                .authorizeRequests().antMatchers("/user").hasAnyRole("customer","admin").anyRequest().permitAll();
         //普通用户和管理员都能修改个人信息
     }
 
