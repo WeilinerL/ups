@@ -74,48 +74,57 @@ public class TokenService {
      * @return
      */
 
-    public String loginCheck(String userName, String password, String userAgent) {
-        UserLogInfo userLogInfo = getLogInfo(userName);
-        boolean flag = false;
-        if(userLogInfo != null) {//避免空指针
-            Map<String, Claim> claimMap = JwtToken.verifyToken(userLogInfo.getStrToken());
-            if(claimMap != null) {
-                flag = true;
-            }
+    public String loginCheck(String userName, String password, String userAgent, String userType) {
+        User userLogin = userMapper.selectByTelNumber(userName);
+        Boolean loginFlag = false;
+        if(userLogin.getStrUserType().equals(userType) || userLogin.getStrUserType().equals("admin")) {
+            loginFlag = true;
         }
-        //有用户登录信息且用户此次登录设备为同一种设备且token令牌未过期
-        //则把令牌返回给该用户(防止重复登录)
-        if(userLogInfo != null && userLogInfo.getStrUserAgent().equals(userAgent) && flag) {
-            if(log.isTraceEnabled()) {
-                log.trace("同一设备有效登录");
+        if(userLogin != null && userLogin.getStrPassword().equals(password) && loginFlag) {
+            UserLogInfo userLogInfo = getLogInfo(userName);
+            boolean flag = false;
+            if(userLogInfo != null) {//避免空指针
+                Map<String, Claim> claimMap = JwtToken.verifyToken(userLogInfo.getStrToken());
+                if(claimMap != null) {
+                    flag = true;
+                }
             }
-            //如果spring tokenMap临时信息丢失
-            if(!tokenMap.containsKey(userLogInfo.getStrToken())) {
-                User user = userMapper.selectByTelNumber(userName);
-                tokenMap.put(userLogInfo.getStrToken(),createUser(userName,password,new String[]{user.getStrUserType()}));
+            //有用户登录信息且用户此次登录设备为同一种设备且token令牌未过期
+            //则把令牌返回给该用户(防止重复登录)
+            if(userLogInfo != null && userLogInfo.getStrUserAgent().equals(userAgent) && flag) {
+                if(log.isTraceEnabled()) {
+                    log.trace("同一设备有效登录");
+                }
+                //如果spring tokenMap临时信息丢失
+                if(!tokenMap.containsKey(userLogInfo.getStrToken())) {
+                    User user = userMapper.selectByTelNumber(userName);
+                    tokenMap.put(userLogInfo.getStrToken(),createUser(userName,password,new String[]{user.getStrUserType()}));
+                }
+                return userLogInfo.getStrToken();
             }
-            return userLogInfo.getStrToken();
-        }
-        //此时用户换了个设备登录且在token令牌有效期内
-        else if(userLogInfo != null && !userLogInfo.getStrUserAgent().equals(userAgent) && flag) {
-            if(log.isTraceEnabled()) {
-                log.trace("换另外的设备有效登录");
-            }
-            //原设备强制下线 更新token
-            logout(userLogInfo.getStrToken());
-            userLogInfoMapper.deleteByPrimaryKey(userName);
-            return login(userName,password,userAgent);
-        }
-        //用户第一次登录或者token令牌已过期
-        else {
-            if(log.isTraceEnabled()) {
-                log.trace("第一次登录或原登录token令牌已失效");
-            }
-            //删除相应用户的登录信息
-            if(userLogInfoMapper.selectByPrimaryKey(userName) != null) {
+            //此时用户换了个设备登录且在token令牌有效期内
+            else if(userLogInfo != null && !userLogInfo.getStrUserAgent().equals(userAgent) && flag) {
+                if(log.isTraceEnabled()) {
+                    log.trace("换另外的设备有效登录");
+                }
+                //原设备强制下线 更新token
+                logout(userLogInfo.getStrToken());
                 userLogInfoMapper.deleteByPrimaryKey(userName);
+                return login(userName,password,userAgent);
             }
-            return login(userName,password,userAgent);
+            //用户第一次登录或者token令牌已过期
+            else {
+                if(log.isTraceEnabled()) {
+                    log.trace("第一次登录或原登录token令牌已失效");
+                }
+                //删除相应用户的登录信息
+                if(userLogInfoMapper.selectByPrimaryKey(userName) != null) {
+                    userLogInfoMapper.deleteByPrimaryKey(userName);
+                }
+                return login(userName,password,userAgent);
+            }
+        }else {
+            return null;
         }
     }
 

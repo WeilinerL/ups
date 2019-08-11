@@ -24,21 +24,24 @@ public class LoginController {
     @PostMapping(value = "login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> userInfo,
                                                      @RequestHeader(value="User-Agent") String userAgent){
-        String userName = userInfo.get("username");
+        String userName = userInfo.get("userName");
         String password = userInfo.get("password");
+        String userType = userInfo.get("userType");
 
         HashMap<String, Object> result = new HashMap<>();
-        String token = tokenService.loginCheck(userName, password,userAgent);
+        String token = tokenService.loginCheck(userName, password,userAgent, userType);
         if(token == null) {
             result.put("message", "invalid username or password");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+            result.put("status","fail");
+            return ResponseEntity.status(HttpStatus.OK).body(result);
         }else {
             if(log.isTraceEnabled()) {
                 log.trace("用户名为"+ tokenService.getUserFromToken(token).getUsername() + "的用户成功登录");
             }
-            result.put("用户名",tokenService.getUserFromToken(token).getUsername());
+            result.put("userName",tokenService.getUserFromToken(token).getUsername());
             result.put("token", token);
-            result.put("客户端",userAgent);
+            result.put("userAgent",userAgent);
+            result.put("userType",userType);
             return ResponseEntity.status(HttpStatus.OK).body(result);
         }
     }
@@ -52,11 +55,13 @@ public class LoginController {
             token = requestHeader.substring(7);
             if(log.isTraceEnabled() && tokenService.getUserFromToken(token) != null) {
                 log.trace("will delete token : " + token);
+                log.trace("注销用户: " + tokenService.getUserFromToken(token).getUsername());
                 result.put("注销用户",tokenService.getUserFromToken(token).getUsername());
                 tokenService.logout(token);
                 return result;
             } else {
-                result.put("注销失败","无此用户登录信息!");
+                result.put("status","fail");
+                result.put("注销失败","此用户登录信息已失效!");
                 return result;
             }
         } else{
