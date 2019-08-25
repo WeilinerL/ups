@@ -48,14 +48,14 @@ public class UserContoller {
         return result;
     }
 
-    @GetMapping(value = "/user_password_modify/{telNumber}/{newPassword}")
-    public Map<String,String> getUserInfo(@PathVariable String telNumber, @PathVariable String newPassword) {
+    @GetMapping(value = "/user_password_modify")
+    public Map<String,String> getUserInfo(@RequestParam(value = "telNumber") String telNumber, @RequestParam(value = "newPassword") String newPassword) {
         Map<String,String> result = new HashMap<>();
         if(telNumber != null && newPassword != null) {
             if(log.isTraceEnabled()) {
                 log.trace("修改电话号码为" + telNumber + "的密码");
             }
-            if(userService.userPasswordModify(telNumber,newPassword) != 0) {
+            if(userService.userPasswordModify(newPassword,telNumber) != 0) {
                 result.put("result","success");
                 return result;
             }

@@ -14,6 +14,8 @@ public class Device {
 
     private String strDeviceAddress;
 
+    private String strCodeId;
+
     public Integer getIntDeviceId() {
         return intDeviceId;
     }
@@ -52,5 +54,13 @@ public class Device {
 
     public void setStrDeviceAddress(String strDeviceAddress) {
         this.strDeviceAddress = strDeviceAddress == null ? null : strDeviceAddress.trim();
+    }
+
+    public String getStrCodeId() {
+        return strCodeId;
+    }
+
+    public void setStrCodeId(String strCodeId) {
+        this.strCodeId = strCodeId == null ? null : strCodeId.trim();
     }
 }

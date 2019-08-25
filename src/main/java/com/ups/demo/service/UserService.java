@@ -15,5 +15,5 @@ public class UserService {
 
     public int userInfoModify(User user) {return userMapper.updateByPrimaryKey(user);}
 
-    public int userPasswordModify(String telNumber, String newPassword) {return userMapper.updataByTelNumber(telNumber,newPassword);}
+    public int userPasswordModify(String newPassword, String telNumber) {return userMapper.updataByTelNumber(newPassword,telNumber);}
 }

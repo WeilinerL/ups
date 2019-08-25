@@ -7,9 +7,10 @@
     <result column="int_user_id" property="intUserId" jdbcType="INTEGER" />
     <result column="str_device_name" property="strDeviceName" jdbcType="VARCHAR" />
     <result column="str_device_address" property="strDeviceAddress" jdbcType="VARCHAR" />
+    <result column="str_code_id" property="strCodeId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    int_device_id, int_core_id, int_user_id, str_device_name, str_device_address
+    int_device_id, int_core_id, int_user_id, str_device_name, str_device_address, str_code_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -23,9 +24,11 @@
   </delete>
   <insert id="insert" parameterType="com.ups.demo.pojo.Device" >
     insert into t_device (int_device_id, int_core_id, int_user_id, 
-      str_device_name, str_device_address)
+      str_device_name, str_device_address, str_code_id
+      )
     values (#{intDeviceId,jdbcType=INTEGER}, #{intCoreId,jdbcType=INTEGER}, #{intUserId,jdbcType=INTEGER}, 
-      #{strDeviceName,jdbcType=VARCHAR}, #{strDeviceAddress,jdbcType=VARCHAR})
+      #{strDeviceName,jdbcType=VARCHAR}, #{strDeviceAddress,jdbcType=VARCHAR}, #{strCodeId,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ups.demo.pojo.Device" >
     insert into t_device
@@ -45,6 +48,9 @@
       <if test="strDeviceAddress != null" >
         str_device_address,
       </if>
+      <if test="strCodeId != null" >
+        str_code_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="intDeviceId != null" >
@@ -61,6 +67,9 @@
       </if>
       <if test="strDeviceAddress != null" >
         #{strDeviceAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="strCodeId != null" >
+        #{strCodeId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -79,6 +88,9 @@
       <if test="strDeviceAddress != null" >
         str_device_address = #{strDeviceAddress,jdbcType=VARCHAR},
       </if>
+      <if test="strCodeId != null" >
+        str_code_id = #{strCodeId,jdbcType=VARCHAR},
+      </if>
     </set>
     where int_device_id = #{intDeviceId,jdbcType=INTEGER}
   </update>
@@ -87,7 +99,8 @@
     set int_core_id = #{intCoreId,jdbcType=INTEGER},
       int_user_id = #{intUserId,jdbcType=INTEGER},
       str_device_name = #{strDeviceName,jdbcType=VARCHAR},
-      str_device_address = #{strDeviceAddress,jdbcType=VARCHAR}
+      str_device_address = #{strDeviceAddress,jdbcType=VARCHAR},
+      str_code_id = #{strCodeId,jdbcType=VARCHAR}
     where int_device_id = #{intDeviceId,jdbcType=INTEGER}
   </update>
 </mapper>
