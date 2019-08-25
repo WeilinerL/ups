@@ -2,6 +2,7 @@ package com.ups.demo.dao;
 
 import com.ups.demo.pojo.UserLogInfo;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -77,8 +77,10 @@ public class TokenService {
     public String loginCheck(String userName, String password, String userAgent, String userType) {
         User userLogin = userMapper.selectByTelNumber(userName);
         Boolean loginFlag = false;
-        if(userLogin.getStrUserType().equals(userType) || userLogin.getStrUserType().equals("admin")) {
-            loginFlag = true;
+        if(userLogin != null) {
+            if(userLogin.getStrUserType().equals(userType) || userLogin.getStrUserType().equals("admin")) {
+                loginFlag = true;
+            }
         }
         if(userLogin != null && userLogin.getStrPassword().equals(password) && loginFlag) {
             UserLogInfo userLogInfo = getLogInfo(userName);
@@ -175,6 +177,21 @@ public class TokenService {
             return false;
         }
 
+    }
+
+    /**
+     * 检查用户的令牌是否有效
+     * @param userName
+     * @param token
+     * @return
+     */
+
+    public boolean tokenCheck(String userName, String token) {
+        if(userName.equals("") && token.equals("")) {return false;}
+        if(token.equals(userLogInfoMapper.selectByPrimaryKey(userName).getStrToken())) {
+            return true;
+        }
+        return false;
     }
 
     private UserDetails createUser(String userName, String password, String[] roles) {

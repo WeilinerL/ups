@@ -42,6 +42,7 @@ public class LoginController {
             result.put("token", token);
             result.put("userAgent",userAgent);
             result.put("userType",userType);
+            result.put("status","success");
             return ResponseEntity.status(HttpStatus.OK).body(result);
         }
     }
@@ -65,8 +66,33 @@ public class LoginController {
                 return result;
             }
         } else{
+            result.put("status","fail");
             result.put("注销失败","无此用户登录信息!");
             return result;
         }
     }
+
+    @PostMapping(value = "/token_check")
+    public Map<String, String> tokenCheck(@RequestBody Map<String, String> userInfo) {
+        Map<String,String> result = new HashMap<>();
+
+        String userName = userInfo.get("userName");
+        String token = userInfo.get("token");
+
+        if(userName != null && token != null) {
+            if(log.isTraceEnabled()) {
+                log.trace("检查用户的token: " + userInfo);
+            }
+            if(tokenService.tokenCheck(userName,token)) {
+                result.put("result","success");
+                return result;
+            }
+            result.put("result", "fail");
+            return result;
+        }
+        result.put("result", "fail");
+        return result;
+    }
+
+
 }
