@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ups.demo.dao.DeviceGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.ups.demo.pojo.DeviceGroup" >
+    <id column="int_id" property="intId" jdbcType="INTEGER" />
+    <result column="str_label" property="strLabel" jdbcType="VARCHAR" />
+    <result column="str_type" property="strType" jdbcType="VARCHAR" />
+    <result column="str_show" property="strShow" jdbcType="VARCHAR" />
+    <result column="str_children" property="strChildren" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    int_id, str_label, str_type, str_show, str_children
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_device_group
+    where int_id = #{intId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_device_group
+    where int_id = #{intId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ups.demo.pojo.DeviceGroup" >
+    insert into t_device_group (int_id, str_label, str_type, 
+      str_show, str_children)
+    values (#{intId,jdbcType=INTEGER}, #{strLabel,jdbcType=VARCHAR}, #{strType,jdbcType=VARCHAR}, 
+      #{strShow,jdbcType=VARCHAR}, #{strChildren,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ups.demo.pojo.DeviceGroup" >
+    insert into t_device_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="intId != null" >
+        int_id,
+      </if>
+      <if test="strLabel != null" >
+        str_label,
+      </if>
+      <if test="strType != null" >
+        str_type,
+      </if>
+      <if test="strShow != null" >
+        str_show,
+      </if>
+      <if test="strChildren != null" >
+        str_children,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="intId != null" >
+        #{intId,jdbcType=INTEGER},
+      </if>
+      <if test="strLabel != null" >
+        #{strLabel,jdbcType=VARCHAR},
+      </if>
+      <if test="strType != null" >
+        #{strType,jdbcType=VARCHAR},
+      </if>
+      <if test="strShow != null" >
+        #{strShow,jdbcType=VARCHAR},
+      </if>
+      <if test="strChildren != null" >
+        #{strChildren,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ups.demo.pojo.DeviceGroup" >
+    update t_device_group
+    <set >
+      <if test="strLabel != null" >
+        str_label = #{strLabel,jdbcType=VARCHAR},
+      </if>
+      <if test="strType != null" >
+        str_type = #{strType,jdbcType=VARCHAR},
+      </if>
+      <if test="strShow != null" >
+        str_show = #{strShow,jdbcType=VARCHAR},
+      </if>
+      <if test="strChildren != null" >
+        str_children = #{strChildren,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where int_id = #{intId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ups.demo.pojo.DeviceGroup" >
+    update t_device_group
+    set str_label = #{strLabel,jdbcType=VARCHAR},
+      str_type = #{strType,jdbcType=VARCHAR},
+      str_show = #{strShow,jdbcType=VARCHAR},
+      str_children = #{strChildren,jdbcType=VARCHAR}
+    where int_id = #{intId,jdbcType=INTEGER}
+  </update>
+</mapper>
