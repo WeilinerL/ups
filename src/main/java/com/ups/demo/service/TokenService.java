@@ -187,7 +187,7 @@ public class TokenService {
      */
 
     public boolean tokenCheck(String userName, String token) {
-        if(userName.equals("") && token.equals("")) {return false;}
+        if(userName.equals("") && token.equals("") || userLogInfoMapper.selectByPrimaryKey(userName) == null) {return false;}
         if(token.equals(userLogInfoMapper.selectByPrimaryKey(userName).getStrToken())) {
             return true;
         }

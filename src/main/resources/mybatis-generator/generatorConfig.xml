@@ -40,7 +40,7 @@
         </javaClientGenerator>
 
         <!-- 相关表的配置 -->
-        <table tableName="t_device" domainObjectName="Device" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+        <table tableName="t_device_group" domainObjectName="DeviceGroup" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false" enableUpdateByExample="false"/>
     </context>
 </generatorConfiguration>
