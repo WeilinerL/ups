@@ -10,6 +10,8 @@ public class Device {
 
     private Integer intUserId;
 
+    private String strSharedUserId;
+
     private String strDeviceName;
 
     private String strDeviceAddress;
@@ -38,6 +40,14 @@ public class Device {
 
     public void setIntUserId(Integer intUserId) {
         this.intUserId = intUserId;
+    }
+
+    public String getStrSharedUserId() {
+        return strSharedUserId;
+    }
+
+    public void setStrSharedUserId(String strSharedUserId) {
+        this.strSharedUserId = strSharedUserId == null ? null : strSharedUserId.trim();
     }
 
     public String getStrDeviceName() {

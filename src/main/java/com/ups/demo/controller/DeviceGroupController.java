@@ -45,4 +45,36 @@ public class DeviceGroupController {
         }
     }
 
+    @PostMapping(value = "add_group/{groupName}")
+    public Map<String,String> addGroup(@PathVariable String groupName) {
+        Map<String,String> result = new HashMap<>();
+        if(!groupName.equals("")) {
+            if(deviceGroupService.addGroup(groupName) != 0) {
+                result.put("result","success");
+                return result;
+            }
+            result.put("result","fail");
+            return result;
+        }else {
+            result.put("result","fail");
+            return result;
+        }
+    }
+
+    @DeleteMapping(value = "delete_group/{groupName}")
+    public Map<String,String> deleteGroup(@PathVariable String groupName) {
+        Map<String,String> result = new HashMap<>();
+        if(!groupName.equals("")) {
+            if(deviceGroupService.deleteGroup(groupName) != 0) {
+                result.put("result","success");
+                return result;
+            }
+            result.put("result","fail");
+            return result;
+        }else {
+            result.put("result","fail");
+            return result;
+        }
+    }
+
 }

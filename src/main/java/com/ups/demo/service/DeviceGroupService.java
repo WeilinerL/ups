@@ -24,4 +24,32 @@ public class DeviceGroupService {
         deviceGroup.setStrLabel(newName);
         return deviceGroupMapper.updateByPrimaryKey(deviceGroup);
     }
+
+    public int addGroup(String groupName) {
+        DeviceGroup deviceGroup = new DeviceGroup();
+        deviceGroup.setStrLabel(groupName);
+        deviceGroup.setStrType("parent");
+        deviceGroup.setStrShow("false");
+        return deviceGroupMapper.insert(deviceGroup);
+    }
+
+    public int deleteGroup(String groupName) {
+        int resultCount = 0;
+        DeviceGroup deviceGroup = deviceGroupMapper.selectByLabel(groupName);
+        if(deviceGroup.getStrChildren() != null) {
+            resultCount += deviceGroupMapper.deleteByLabel(groupName);
+            String[] childrenId = deviceGroup.getStrChildren().split(";");
+            for(String id : childrenId) {
+                int childId = Integer.parseInt(id);
+                resultCount += deviceGroupMapper.deleteByPrimaryKey(childId);
+            }
+            if(resultCount == childrenId.length + 1) {
+                return 1;
+            }else {
+                return 0;
+            }
+        }else {
+            return deviceGroupMapper.deleteByLabel(groupName);
+        }
+    }
 }

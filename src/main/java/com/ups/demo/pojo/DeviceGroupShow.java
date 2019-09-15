@@ -62,25 +62,27 @@ public class DeviceGroupShow {
         List<DeviceGroupShow> deviceGroupShowList = new ArrayList<>();
         String[] childrenId = null;
         for(DeviceGroup deviceGroup: deviceGroups) {
-            if(deviceGroup.getStrChildren() != null) {
+            if(deviceGroup.getStrType().equals("parent")) {
                 DeviceGroupShow deviceGroupShow = new DeviceGroupShow();
                 deviceGroupShow.setId(deviceGroup.getIntId());
                 deviceGroupShow.setLabel(deviceGroup.getStrLabel());
                 deviceGroupShow.setType(deviceGroup.getStrType());
                 deviceGroupShow.setShow(Boolean.parseBoolean(deviceGroup.getStrShow()));
-                childrenId = deviceGroup.getStrChildren().split(";");
-                for(String id : childrenId) {
-                    int childId = Integer.parseInt(id);
-                    for(DeviceGroup deviceGroup2 : deviceGroups) {
-                        if(deviceGroup2.getStrChildren() != null) { continue; }
-                        else {
-                            if(deviceGroup2.getIntId() == childId) {
-                                DeviceGroupShow deviceGroupShow2 = new DeviceGroupShow();
-                                deviceGroupShow2.setId(deviceGroup2.getIntId());
-                                deviceGroupShow2.setLabel(deviceGroup2.getStrLabel());
-                                deviceGroupShow2.setType(deviceGroup2.getStrType());
-                                deviceGroupShow2.setShow(Boolean.parseBoolean(deviceGroup2.getStrShow()));
-                                deviceGroupShow.addDeviceGroupShows(deviceGroupShow2);
+                if(deviceGroup.getStrChildren() != null) {
+                    childrenId = deviceGroup.getStrChildren().split(";");
+                    for(String id : childrenId) {
+                        int childId = Integer.parseInt(id);
+                        for(DeviceGroup deviceGroup2 : deviceGroups) {
+                            if(deviceGroup2.getStrType().equals("parent")) { continue; }
+                            else {
+                                if(deviceGroup2.getIntId() == childId) {
+                                    DeviceGroupShow deviceGroupShow2 = new DeviceGroupShow();
+                                    deviceGroupShow2.setId(deviceGroup2.getIntId());
+                                    deviceGroupShow2.setLabel(deviceGroup2.getStrLabel());
+                                    deviceGroupShow2.setType(deviceGroup2.getStrType());
+                                    deviceGroupShow2.setShow(Boolean.parseBoolean(deviceGroup2.getStrShow()));
+                                    deviceGroupShow.addDeviceGroupShows(deviceGroupShow2);
+                                }
                             }
                         }
                     }

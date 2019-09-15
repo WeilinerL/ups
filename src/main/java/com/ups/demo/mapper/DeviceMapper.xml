@@ -5,12 +5,14 @@
     <id column="int_device_id" property="intDeviceId" jdbcType="INTEGER" />
     <result column="int_core_id" property="intCoreId" jdbcType="INTEGER" />
     <result column="int_user_id" property="intUserId" jdbcType="INTEGER" />
+    <result column="str_shared_user_id" property="strSharedUserId" jdbcType="VARCHAR" />
     <result column="str_device_name" property="strDeviceName" jdbcType="VARCHAR" />
     <result column="str_device_address" property="strDeviceAddress" jdbcType="VARCHAR" />
     <result column="str_code_id" property="strCodeId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    int_device_id, int_core_id, int_user_id, str_device_name, str_device_address, str_code_id
+    int_device_id, int_core_id, int_user_id, str_shared_user_id, str_device_name, str_device_address, 
+    str_code_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -24,11 +26,11 @@
   </delete>
   <insert id="insert" parameterType="com.ups.demo.pojo.Device" >
     insert into t_device (int_device_id, int_core_id, int_user_id, 
-      str_device_name, str_device_address, str_code_id
-      )
+      str_shared_user_id, str_device_name, str_device_address, 
+      str_code_id)
     values (#{intDeviceId,jdbcType=INTEGER}, #{intCoreId,jdbcType=INTEGER}, #{intUserId,jdbcType=INTEGER}, 
-      #{strDeviceName,jdbcType=VARCHAR}, #{strDeviceAddress,jdbcType=VARCHAR}, #{strCodeId,jdbcType=VARCHAR}
-      )
+      #{strSharedUserId,jdbcType=VARCHAR}, #{strDeviceName,jdbcType=VARCHAR}, #{strDeviceAddress,jdbcType=VARCHAR}, 
+      #{strCodeId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ups.demo.pojo.Device" >
     insert into t_device
@@ -41,6 +43,9 @@
       </if>
       <if test="intUserId != null" >
         int_user_id,
+      </if>
+      <if test="strSharedUserId != null" >
+        str_shared_user_id,
       </if>
       <if test="strDeviceName != null" >
         str_device_name,
@@ -62,6 +67,9 @@
       <if test="intUserId != null" >
         #{intUserId,jdbcType=INTEGER},
       </if>
+      <if test="strSharedUserId != null" >
+        #{strSharedUserId,jdbcType=VARCHAR},
+      </if>
       <if test="strDeviceName != null" >
         #{strDeviceName,jdbcType=VARCHAR},
       </if>
@@ -82,6 +90,9 @@
       <if test="intUserId != null" >
         int_user_id = #{intUserId,jdbcType=INTEGER},
       </if>
+      <if test="strSharedUserId != null" >
+        str_shared_user_id = #{strSharedUserId,jdbcType=VARCHAR},
+      </if>
       <if test="strDeviceName != null" >
         str_device_name = #{strDeviceName,jdbcType=VARCHAR},
       </if>
@@ -98,6 +109,7 @@
     update t_device
     set int_core_id = #{intCoreId,jdbcType=INTEGER},
       int_user_id = #{intUserId,jdbcType=INTEGER},
+      str_shared_user_id = #{strSharedUserId,jdbcType=VARCHAR},
       str_device_name = #{strDeviceName,jdbcType=VARCHAR},
       str_device_address = #{strDeviceAddress,jdbcType=VARCHAR},
       str_code_id = #{strCodeId,jdbcType=VARCHAR}

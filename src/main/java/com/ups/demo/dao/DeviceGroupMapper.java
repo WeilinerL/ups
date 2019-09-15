@@ -1,6 +1,7 @@
 package com.ups.demo.dao;
 
 import com.ups.demo.pojo.DeviceGroup;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,9 @@ public interface DeviceGroupMapper {
 
     @Select("select * from t_device_group where str_label = #{oldName}")
     DeviceGroup selectByLabel(String oldName);
+
+    @Delete("delete from t_device_group where str_label = #{groupName}")
+    int deleteByLabel(String groupName);
 
     int deleteByPrimaryKey(Integer intId);
 
